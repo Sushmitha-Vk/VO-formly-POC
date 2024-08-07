@@ -15,7 +15,8 @@ export const appConfig: ApplicationConfig = {
       validationMessages: [{ name: 'required', message: 'This field is required' }],
       types: [
         { name: 'tabs', component: FormlyFieldTabs },
-        { name: 'exp-panel', component: FormlyFieldExpansionPanel },],
+        { name: 'exp-panel', component: FormlyFieldExpansionPanel },
+      ],
     }),)
    
   ]
