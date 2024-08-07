@@ -86,6 +86,74 @@ export class AppComponent {
           ],
         },
         {
+          props: { label: 'Account Details' },
+          fieldGroup: [
+            {
+              type: 'exp-panel',
+              props: { label: 'Address' },
+              fieldGroup: [
+                {
+                  fieldGroup: [
+                    {
+                      key: 'country',
+                      type: 'input',
+                      props: {
+                        label: 'Country',
+                        required: true,
+                      },
+                    },
+                    {
+                      key: 'state',
+                      type: 'input',
+                      props: {
+                        label: 'State',
+                        required: true,
+                      },
+                    },
+                    {
+                      key: 'pin',
+                      type: 'number',
+                      props: {
+                        label: 'Pin code',
+                        required: true,
+                      },
+                    },
+                    
+                  ]
+                }
+              ]
+            },
+            {
+              key: 'bankDetails',
+              type: 'table',
+              props: {
+                height: '200px',
+                gridOptions: {
+                  rowHeight: 42,
+                  columnDefs: [
+                    'name', 'accountType', 'accountNumber', 'ifscCode'
+                    // {
+                    //   headerName: 'Name',
+                    //   field: 'name',
+                    //   sortable: true,
+                    //   width: 350,
+                    // }
+                  ],
+                  data: [
+                    {name: 'John', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Abram', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Cist', accountType: 'Savings', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Alphy', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Zench', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Linchy', accountType: 'Savings', accountNumber: '64432677', ifscCode: 'hcb43'},
+                    {name: 'Morgy', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
+                  ]
+                },
+              },
+            },
+          ],
+        },
+        {
           props: { label: 'Day of the trip' },
           fieldGroup: [
             {
@@ -101,41 +169,6 @@ export class AppComponent {
         },
       ],
     },
-    {
-      type: 'exp-panel',
-      props: { label: 'Address' },
-      fieldGroup: [
-        {
-          fieldGroup: [
-            {
-              key: 'country',
-              type: 'input',
-              props: {
-                label: 'Country',
-                required: true,
-              },
-            },
-            {
-              key: 'state',
-              type: 'input',
-              props: {
-                label: 'State',
-                required: true,
-              },
-            },
-            {
-              key: 'pin',
-              type: 'number',
-              props: {
-                label: 'Pin code',
-                required: true,
-              },
-            },
-            
-          ]
-        }
-      ]
-    }
   ];
 
   submit() {
