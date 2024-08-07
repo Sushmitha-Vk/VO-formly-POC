@@ -29,20 +29,45 @@ export class AppComponent {
           props: { label: 'Personal data' },
           fieldGroup: [
             {
-              key: 'firstname',
+              key: 'panNo',
               type: 'input',
               props: {
-                label: 'First name',
+                label: 'Enter PAN No',
                 required: true,
               },
             },
             {
-              key: 'age',
+              key: 'accountNumber',
               type: 'input',
               props: {
                 type: 'number',
-                label: 'Age',
+                label: 'Account Number',
                 required: true,
+              },
+            },
+            {
+              key: 'remarks',
+              type: 'textarea',
+              props: {
+                label: 'Remaks,if any',
+                placeholder: 'Please enter your message here',
+                description: 'Please enter your message',
+                required: false,
+              },
+            },
+            {
+              key: 'Checkbox',
+              type: 'checkbox',
+              props: {
+                label: 'Accept terms',
+                description: 'In order to proceed, please accept terms',
+                pattern: 'true',
+                required: true,
+              },
+              validation: {
+                messages: {
+                  pattern: 'Please accept the terms',
+                },
               },
             },
           ],

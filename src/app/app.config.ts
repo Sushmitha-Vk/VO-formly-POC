@@ -17,7 +17,9 @@ export const appConfig: ApplicationConfig = {
       types: [
         { name: 'tabs', component: FormlyFieldTabs },
         { name: 'exp-panel', component: FormlyFieldExpansionPanel },
-        { name: 'table', component: FormlyFieldTable },],
+        { name: 'table', component: FormlyFieldTable },
+      ],
+
     }),)
    
   ]
