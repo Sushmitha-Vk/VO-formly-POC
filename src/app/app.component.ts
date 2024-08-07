@@ -56,7 +56,7 @@ export class AppComponent {
               },
             },
             {
-              key: 'Checkbox',
+              key: 'acceptTerms',
               type: 'checkbox',
               props: {
                 label: 'Accept terms',
@@ -96,7 +96,7 @@ export class AppComponent {
               type: 'number',
               props: {
                 label: 'Number of Employees',
-                required: true,
+                required: false,
               },
             },
             {
@@ -104,7 +104,7 @@ export class AppComponent {
               type: 'input',
               props: {
                 label: 'Revenue of company',
-                required: true,
+                required: false,
               },
             },
             {
@@ -112,7 +112,7 @@ export class AppComponent {
               type: 'radio',
               props: {
                 label: 'Does your company use renewable electricity?',
-                required: true,
+                required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
                   { value: 'No', label: 'No' }
@@ -124,7 +124,7 @@ export class AppComponent {
               type: 'radio',
               props: {
                 label: 'Has your company has done GHG Emission inventory assurance by 3rd party?',
-                required: true,
+                required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
                   { value: 'No', label: 'No' }
@@ -136,7 +136,7 @@ export class AppComponent {
               type: 'radio',
               props: {
                 label: 'Does your company calculate the GHG Emissions?',
-                required: true,
+                required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
                   { value: 'No', label: 'No' }
@@ -149,7 +149,7 @@ export class AppComponent {
               props: {
                 label: 'Scope 1 emissions',
                 placeholder: 'Provide GHG Emission data tCO2e',
-                required: true,
+                required: false,
               },
               expressions: {
                 hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
@@ -161,7 +161,7 @@ export class AppComponent {
               props: {
                 label: 'Scope 2 emissions',
                 placeholder: 'Provide GHG Emission data tCO2e',
-                required: true,
+                required: false,
               },
               expressions: {
                 hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
@@ -173,7 +173,7 @@ export class AppComponent {
               props: {
                 label: 'Scope 3 emissions',
                 placeholder: 'Provide GHG Emission data tCO2e',
-                required: true,
+                required: false,
               },
               expressions: {
                 hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
@@ -184,7 +184,7 @@ export class AppComponent {
               type: 'input',
               props: {
                 label: 'Please provide reasons for not calculating the GHG emissions',
-                required: true,
+                required: false,
               },
               expressions: {
                 hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'No'",
@@ -195,7 +195,7 @@ export class AppComponent {
               type: 'radio',
               props: {
                 label: 'Your GHG emissions data are published?',
-                required: true,
+                required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
                   { value: 'No', label: 'No' }
@@ -218,7 +218,7 @@ export class AppComponent {
                       type: 'input',
                       props: {
                         label: 'Country',
-                        required: true,
+                        required: false,
                       },
                     },
                     {
@@ -226,7 +226,7 @@ export class AppComponent {
                       type: 'input',
                       props: {
                         label: 'State',
-                        required: true,
+                        required: false,
                       },
                     },
                     {
@@ -234,7 +234,7 @@ export class AppComponent {
                       type: 'number',
                       props: {
                         label: 'Pin code',
-                        required: true,
+                        required: false,
                       },
                     },
                     
@@ -281,7 +281,7 @@ export class AppComponent {
               props: {
                 type: 'date',
                 label: 'Day of the trip',
-                required: true,
+                required: false,
               },
             },
           ],
@@ -292,5 +292,6 @@ export class AppComponent {
 
   submit() {
     alert(JSON.stringify(this.model));
+    localStorage.setItem('submittedData', JSON.stringify(this.model));
   }
 }

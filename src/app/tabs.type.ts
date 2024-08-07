@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyModule } from '@ngx-formly/core';
@@ -8,7 +9,7 @@ import { FormlyModule } from '@ngx-formly/core';
 @Component({
   selector: 'formly-field-tabs',
   standalone: true,
-  imports:[MatTabsModule,ReactiveFormsModule,FormlyModule],
+  imports:[MatTabsModule,ReactiveFormsModule,FormlyModule, MatButtonModule],
   template: `
     <mat-tab-group>
       @for(tab of field.fieldGroup; track tab; let i = $index; let last = $last){
@@ -17,7 +18,7 @@ import { FormlyModule } from '@ngx-formly/core';
         [disabled]="i !== 0 && !isValid(field.fieldGroup ? field.fieldGroup[i - 1]:{})">
             <formly-field [field]="tab"></formly-field>
             @if (last) {
-                <button class="btn btn-primary" [disabled]="!form.valid" type="submit">Submit</button>
+                <button mat-flat-button color="primary" [disabled]="!form.valid" type="submit">Submit</button>
             }
         </mat-tab>
       }
