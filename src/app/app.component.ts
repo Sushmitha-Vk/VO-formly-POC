@@ -76,6 +76,41 @@ export class AppComponent {
         },
       ],
     },
+    {
+      type: 'exp-panel',
+      props: { label: 'Address' },
+      fieldGroup: [
+        {
+          fieldGroup: [
+            {
+              key: 'country',
+              type: 'input',
+              props: {
+                label: 'Country',
+                required: true,
+              },
+            },
+            {
+              key: 'state',
+              type: 'input',
+              props: {
+                label: 'State',
+                required: true,
+              },
+            },
+            {
+              key: 'pin',
+              type: 'number',
+              props: {
+                label: 'Pin code',
+                required: true,
+              },
+            },
+            
+          ]
+        }
+      ]
+    }
   ];
 
   submit() {
