@@ -7,6 +7,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldTabs } from './tabs.type';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormlyFieldExpansionPanel } from './expansion-panel.types';
+import { FormlyFieldTable } from './table.types';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
@@ -15,7 +16,8 @@ export const appConfig: ApplicationConfig = {
       validationMessages: [{ name: 'required', message: 'This field is required' }],
       types: [
         { name: 'tabs', component: FormlyFieldTabs },
-        { name: 'exp-panel', component: FormlyFieldExpansionPanel },],
+        { name: 'exp-panel', component: FormlyFieldExpansionPanel },
+        { name: 'table', component: FormlyFieldTable },],
     }),)
    
   ]
