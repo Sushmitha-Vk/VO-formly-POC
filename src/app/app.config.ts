@@ -14,7 +14,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AutocompleteTypeComponent } from './autocomplete-type.component';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideRouter(routes), provideClientHydration(),
     provideAnimations(),
     importProvidersFrom(FormlyModule.forRoot({
       validationMessages: [{ name: 'required', message: 'This field is required' }],

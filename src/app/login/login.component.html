@@ -1,0 +1,24 @@
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+<div class="wrapper" fxLayout="column" fxLayoutAlign="center center">
+  <div *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div fxLayout="column" fxLayoutGap="20px" class="container" [formGroup]="loginForm" *ngIf="!isLoading"> 
+    <h1>Log In</h1>
+    <span *ngIf="loginForm.get('email').touched && !loginForm.get('email').valid" class="error">! Email is required</span>
+    <span *ngIf="loginForm.get('password').touched && !loginForm.get('password').valid" class="error">! Password is required</span>
+    <span *ngIf="error">{{error}}</span>
+    
+    <div>
+      <input type="text" placeholder="Email" formControlName='email'>
+      <i class="fa fa-envelope-o" aria-hidden="true"></i>
+    </div>
+    <div>
+      <input [type]="passwordType" placeholder="Password" formControlName='password'>
+      <i [ngClass]="(showIcon) ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="onChange()"></i>
+    </div>
+   
+    <button mat-button (click)="onSubmit()" [disabled]="!loginForm.valid">Log In</button>
+  </div> 
+</div>
