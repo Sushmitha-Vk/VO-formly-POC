@@ -8,6 +8,10 @@ import { FormlyFieldTabs } from './tabs.type';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FormlyFieldExpansionPanel } from './expansion-panel.types';
 import { FormlyFieldTable } from './table.types';
+import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AutocompleteTypeComponent } from './autocomplete-type.component';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
@@ -18,10 +22,13 @@ export const appConfig: ApplicationConfig = {
         { name: 'tabs', component: FormlyFieldTabs },
         { name: 'exp-panel', component: FormlyFieldExpansionPanel },
         { name: 'table', component: FormlyFieldTable },
+        { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },
       ],
 
-    }),)
-   
+    }),
+    MatNativeDateModule,
+    FormlyMatDatepickerModule),
+    MatAutocompleteModule
   ]
   
 };

@@ -3,7 +3,8 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { FormlyFieldConfig, FormlyFormOptions,FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldTabs } from './tabs.type';
-import { FormlyMaterialModule } from '@ngx-formly/material';;
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { of } from 'rxjs';
 
 
 
@@ -20,6 +21,36 @@ export class AppComponent {
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
+  states = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Odisha',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttarakhand',
+    'Uttar Pradesh',
+    'West Bengal'
+  ];
 
   fields: FormlyFieldConfig[] = [
     {
@@ -201,7 +232,29 @@ export class AppComponent {
                   { value: 'No', label: 'No' }
                 ],
               },
-            }
+            },
+            {
+              key: 'Date',
+              type: 'datepicker',
+              props: {
+                label: 'Select the Date',
+                required: true,
+                datepickerOptions: {
+                  min: new Date(),
+                  max: new Date( '08/30/2024')
+                }
+              },
+            },
+            {
+              key: 'selectTheState',
+              type: 'autocomplete',
+              props: {
+                required: true,
+                label: 'Select the State',
+                placeholder: 'Placeholder',
+                filter: (term: string) => of(term ? this.filterStates(term) : this.states.slice()),
+              },
+            },
           ],
         },
         {
@@ -293,5 +346,9 @@ export class AppComponent {
   submit() {
     alert(JSON.stringify(this.model));
     localStorage.setItem('submittedData', JSON.stringify(this.model));
+  }
+
+  filterStates(name: string) {
+    return this.states.filter((state) => state.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 }
