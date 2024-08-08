@@ -255,6 +255,22 @@ export class AppComponent {
                 filter: (term: string) => of(term ? this.filterStates(term) : this.states.slice()),
               },
             },
+            {
+              key: 'fieldsNotAvailableInTIN',
+              type: 'select',
+              props: {
+                label: 'Select the fields not available in TIN / No PE certificate',
+                multiple: true,
+                required: true,
+                options: [
+                  { value: 'name', label: 'Name' },
+                  { value: 'status', label: 'Status' },
+                  { value: 'tin', label: 'TIN' },
+                  { value: 'validityPeriodOfTIN', label: 'Validity Period of TIN' },
+                  { value: 'address', label: 'Address'}
+                ],
+              },
+            },
           ],
         },
         {
