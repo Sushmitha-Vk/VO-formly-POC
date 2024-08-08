@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { VendorOnboardingComponent } from '../vendor-onboarding/vendor-onboarding.component';
+import { CommonModule } from '@angular/common';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 @Component({
   selector: 'app-approver-form',
   standalone: true,
-  imports: [],
+  imports: [VendorOnboardingComponent, ToolbarComponent, CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './approver-form.component.html',
   styleUrl: './approver-form.component.scss'
 })
-export class ApproverFormComponent {
+export class ApproverFormComponent implements OnInit {
   isLoading = false;
+  vendorId: any;
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
-  constructor(private router: Router) {}
-
-  onLogOut() {
-    this.isLoading = true;
-    // setTimeout(() => {
-      this.router.navigate(['/login']);
-    // }, 1000)
-    localStorage.removeItem('loggedInUser');
+  ngOnInit(): void {
+      this.route.queryParams.subscribe((data: any) => this.vendorId = data.id);
   }
+ 
 }

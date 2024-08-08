@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { FormlyModule, FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyFieldTabs } from '../tabs.type';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-vendor-onboarding',
   standalone: true,
-  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule],
+  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule, MatToolbarModule,
+    CommonModule
+  ],
   templateUrl: './vendor-onboarding.component.html',
   styleUrl: './vendor-onboarding.component.scss'
 })
 export class VendorOnboardingComponent implements OnInit{
+  @Input() vendorId: any;
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
@@ -270,6 +275,24 @@ export class VendorOnboardingComponent implements OnInit{
           ],
         },
         {
+          props: { label: 'Comment' },
+          // expressions: {
+          //   hide: "field.model.id == 22"
+          // },
+          fieldGroup: [
+            {
+              key: 'comment',
+              type: 'textarea',
+              props: {
+                label: 'Comments',
+                placeholder: 'Please enter your comments here',
+                description: 'Please enter your comments',
+                required: false,
+              }
+            },
+          ]
+        },
+        {
           props: { label: 'Day of the trip' },
           fieldGroup: [
             {
@@ -289,10 +312,15 @@ export class VendorOnboardingComponent implements OnInit{
 
   ngOnInit(): void {
       this.previousData = JSON.parse(localStorage.getItem('submittedData') ?? '[]');
+      if(this.vendorId && this.previousData.length) {
+        const formData = this.previousData.find(data => data.id == this.vendorId)?.formData
+        this.model = { ...formData, id: this.vendorId };
+
+      }
   }
   submit() {
     alert(JSON.stringify(this.model));
-    this.previousData.push({id: this.model.accountNumber, status: 'submitted' , formData: this.model})
+    this.previousData.push({id: this.model.accountNumber, status: 'Submitted' , formData: this.model})
     localStorage.setItem('submittedData', JSON.stringify(this.previousData));
   }
 }

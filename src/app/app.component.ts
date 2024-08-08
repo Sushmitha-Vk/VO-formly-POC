@@ -4,15 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { FormlyFieldConfig, FormlyFormOptions,FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldTabs } from './tabs.type';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
-
-
-
 
 @Component({
   selector: 'app-root',
   standalone:true,
-  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule
+  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule, MatButtonModule, MatIconModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

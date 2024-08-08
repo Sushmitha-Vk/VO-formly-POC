@@ -7,9 +7,10 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ToolbarComponent } from '../toolbar/toolbar.component';
 
 enum Status {
-  submitted, approved, rejected
+  Submitted, Approved, Rejected
 }
 export interface InboxContent {
   id: string,
@@ -21,7 +22,7 @@ export interface InboxContent {
   selector: 'app-inbox',
   standalone: true,
   imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule,
-    MatButtonModule
+    MatButtonModule, ToolbarComponent
   ],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
