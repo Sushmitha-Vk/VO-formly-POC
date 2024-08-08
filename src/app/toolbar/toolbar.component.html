@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Vendor Onboarding Approval Process</span>
+    <span class="example-spacer"></span>
+    
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        <mat-icon>notifications</mat-icon>
+        <span class="badge" *ngIf="badgeCount > 0">{{badgeCount}}</span>
+      </button>
+    <button (click)="onLogOut()" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>

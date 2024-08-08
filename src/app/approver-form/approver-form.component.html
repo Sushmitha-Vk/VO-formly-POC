@@ -1,2 +1,5 @@
-<p>approver-form works!</p>
-<button (click)="onLogOut()">LogOut</button>
+<app-toolbar></app-toolbar>
+<!-- <button (click)="onLogOut()">LogOut</button> -->
+<div *ngIf="vendorId">
+  <app-vendor-onboarding [vendorId]="vendorId"></app-vendor-onboarding>
+</div>

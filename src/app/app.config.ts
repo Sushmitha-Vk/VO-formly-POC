@@ -12,6 +12,7 @@ import {FormlyMatDatepickerModule} from '@ngx-formly/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AutocompleteTypeComponent } from './autocomplete-type.component';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,7 +31,8 @@ export const appConfig: ApplicationConfig = {
     }),
     MatNativeDateModule,
     FormlyMatDatepickerModule),
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ]
   
 };

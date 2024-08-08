@@ -5,13 +5,16 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
+import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 
 // import { AuthService } from /auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, MatProgressSpinnerModule, MatButtonModule,
+    FlexLayoutModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   // encapsulation: ViewEncapsulation.None
@@ -31,6 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
+    localStorage.removeItem('loggedInUser');
     this.buildForm();
     this.passwordType = "password";
   }
@@ -53,17 +57,6 @@ export class LoginComponent implements OnInit {
       this.error = 'Login failed due to invalid credentials';
       this.isLoading = false;
     }
-      // this.authService.logInUser(data.email, data.password)
-      // .then((result: any) => {
-      //   console.log(result.user);
-      //   this.isLoading = false;
-      //   this.authService.setLoginStatus(true);
-      //   this.router.navigate(['/home'])
-      //   })
-      // .catch((error: any) => {
-      //   this.error = error;
-      //   this.isLoading = false;
-      // })
   }
 
   onChange() {
