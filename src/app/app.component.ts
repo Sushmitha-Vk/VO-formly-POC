@@ -7,6 +7,8 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
+import { ApiService } from './api.service';
+
 
 @Component({
   selector: 'app-root',
@@ -358,9 +360,24 @@ export class AppComponent {
     },
   ];
 
+  constructor(private apiService: ApiService){}
+
   submit() {
-    alert(JSON.stringify(this.model));
-    localStorage.setItem('submittedData', JSON.stringify(this.model));
+    // alert(JSON.stringify(this.model));
+    // localStorage.setItem('submittedData', JSON.stringify(this.model));
+    const data = {
+      file: this.model,
+      data: JSON.stringify(this.model),
+      status: 'Active'
+    }
+    
+this.apiService.addData(data).subscribe();
+  }
+
+  getAllData(){
+    this.apiService.getData().subscribe((x)=>{
+console.log(x);
+    })
   }
 
   filterStates(name: string) {
