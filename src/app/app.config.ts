@@ -10,7 +10,9 @@ import { FormlyFieldExpansionPanel } from './expansion-panel.types';
 import { FormlyFieldTable } from './table.types';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(),
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideRouter(routes), provideClientHydration(),
     provideAnimations(),
     importProvidersFrom(FormlyModule.forRoot({
       validationMessages: [{ name: 'required', message: 'This field is required' }],
