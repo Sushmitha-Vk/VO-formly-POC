@@ -368,7 +368,8 @@ export class AppComponent {
     const data = {
       file: this.model,
       data: JSON.stringify(this.model),
-      status: 'Active'
+      // status: 'Submitted'
+      status: 'Approved'
     }
     
 this.apiService.addData(data).subscribe();

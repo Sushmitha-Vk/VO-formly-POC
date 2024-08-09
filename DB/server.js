@@ -1,11 +1,13 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
+require('dotenv').config();
+
 
 const app = express();
 
 
-const uri = "mongodb+srv://mongodbuser:MDG6C4FZqSv7Lsu5@formly-poc.siuj9yi.mongodb.net/?retryWrites=true&w=majority&appName=formly-poc";
+const uri = process.env.URI;
  
 const client = new MongoClient(uri, {
   serverApi: {
@@ -37,7 +39,19 @@ app.use(express.json());
 app.get('/notification', async (req, res) => {
     try {
       const data = await vendorOnboardingCollection.find({}).toArray();
-      res.json(data);
+      // const filteredData = data.filter((element)=>element.status === 'Submitted')
+      // .map(element=>({_id:element._id,status:element.status}))
+      const result = data.reduce((acc, element) => {
+        if (element.status === 'Submitted') {
+          acc.count++;
+          acc.data.push({
+            _id:element._id,
+            status:element.status
+          });
+        }
+        return acc;
+      }, { count: 0, data: [] });
+      res.json(result);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
