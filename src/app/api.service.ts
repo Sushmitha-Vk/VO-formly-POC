@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 interface Data {
   file: Object;
-  data: string;
+  formData: string;
   status: string;
 }
 
@@ -21,6 +21,12 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/onboarding`, data);
   }
 
-  getData(): Observable<Data[]> {
+  getAllSubmittedData(): Observable<Data[]> {
     return this.http.get<Data[]>(`${this.apiUrl}/notification`);
-  }}
+  }
+
+  getDataById(id:string): Observable<Data[]> {
+    return this.http.get<Data[]>(`${this.apiUrl}/notification/${id}`);
+  }
+
+}

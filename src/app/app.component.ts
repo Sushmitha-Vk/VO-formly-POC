@@ -366,23 +366,11 @@ export class AppComponent {
   }
 
   submit() {
-    // alert(JSON.stringify(this.model));
-    // localStorage.setItem('submittedData', JSON.stringify(this.model));
-    const data = {
-      file: this.model,
-      data: JSON.stringify(this.model),
-      // status: 'Submitted'
-      status: 'Approved'
-    }
-    
-this.apiService.addData(data).subscribe();
+    alert(JSON.stringify(this.model));
+    localStorage.setItem('submittedData', JSON.stringify(this.model));
   }
 
-  getAllData(){
-    this.apiService.getData().subscribe((x)=>{
-console.log(x);
-    })
-  }
+  
 
   filterStates(name: string) {
     return this.states.filter((state) => state.toLowerCase().indexOf(name.toLowerCase()) === 0);

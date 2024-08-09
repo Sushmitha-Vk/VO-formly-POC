@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
 
@@ -39,14 +39,13 @@ app.use(express.json());
 app.get('/notification', async (req, res) => {
     try {
       const data = await vendorOnboardingCollection.find({}).toArray();
-      // const filteredData = data.filter((element)=>element.status === 'Submitted')
-      // .map(element=>({_id:element._id,status:element.status}))
       const result = data.reduce((acc, element) => {
         if (element.status === 'Submitted') {
           acc.count++;
           acc.data.push({
             _id:element._id,
-            status:element.status
+            status:element.status,
+            formData:element.formData
           });
         }
         return acc;
@@ -61,7 +60,7 @@ app.get('/notification', async (req, res) => {
     try {
         const newData = {
             file: req.body.file,
-            data: req.body.data,
+            formData: req.body.formData,
             status: req.body.status
         };
     
@@ -71,6 +70,25 @@ app.get('/notification', async (req, res) => {
       res.status(500).json({ error: err.message });
     }
   });
+
+
+  app.get('/notification/:id', async (req, res) => {
+    try {
+      const id = req.params.id;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+      }
+      const formData = await vendorOnboardingCollection.findOne({ _id: new ObjectId(id) });
+      if (formData) {        
+        res.json(formData);
+      } else {
+        res.status(404).json({ message: 'Data not found' });
+      }
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+  
   
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
