@@ -8,13 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import { ApiService } from './api.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-root',
   standalone:true,
-  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule, MatButtonModule, MatIconModule
-  ],
+  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule, MatButtonModule, MatIconModule,
+  TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -360,7 +361,9 @@ export class AppComponent {
     },
   ];
 
-  constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService, public translate: TranslateService){
+    translate.setDefaultLang('en');
+  }
 
   submit() {
     // alert(JSON.stringify(this.model));

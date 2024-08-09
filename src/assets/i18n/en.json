@@ -1,0 +1,8 @@
+{
+    "FORM": {
+      "PANNUMBER": "Enter PAN No",
+      "ACCNUMBER": "Account Number",
+      "REMARKS": "Remaks,if any",
+      "TERMS": "Accept terms"
+    }
+}

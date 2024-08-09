@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { FormlyModule, FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
@@ -6,6 +6,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyFieldTabs } from '../tabs.type';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-vendor-onboarding',
@@ -22,7 +23,7 @@ export class VendorOnboardingComponent implements OnInit{
   model: any = {};
   options: FormlyFormOptions = {};
   previousData: any[] = [];
-
+  translate = inject(TranslateService);
   fields: FormlyFieldConfig[] = [
     {
       type: 'tabs',
@@ -34,8 +35,11 @@ export class VendorOnboardingComponent implements OnInit{
               key: 'panNo',
               type: 'input',
               props: {
-                label: 'Enter PAN No',
+                // label: 'Enter PAN No',
                 required: true,
+              },
+              expressions: {
+                'props.label': this.translate.stream('FORM.PANNUMBER'),
               },
             },
             {
@@ -43,28 +47,37 @@ export class VendorOnboardingComponent implements OnInit{
               type: 'input',
               props: {
                 type: 'number',
-                label: 'Account Number',
+                // label: 'Account Number',
                 required: true,
+              },
+              expressions: {
+                'props.label': this.translate.stream('FORM.ACCNUMBER'),
               },
             },
             {
               key: 'remarks',
               type: 'textarea',
               props: {
-                label: 'Remaks,if any',
+                // label: 'Remaks,if any',
                 placeholder: 'Please enter your message here',
                 description: 'Please enter your message',
                 required: false,
+              },
+              expressions: {
+                'props.label': this.translate.stream('FORM.REMARKS'),
               },
             },
             {
               key: 'acceptTerms',
               type: 'checkbox',
               props: {
-                label: 'Accept terms',
+                // label: 'Accept terms',
                 description: 'In order to proceed, please accept terms',
                 pattern: 'true',
                 required: true,
+              },
+              expressions: {
+                'props.label': this.translate.stream('FORM.TERMS'),
               },
               validation: {
                 messages: {
