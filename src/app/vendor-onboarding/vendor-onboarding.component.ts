@@ -1,23 +1,34 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { FormlyModule, FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
+import {
+  FormlyModule,
+  FormlyFormOptions,
+  FormlyFieldConfig,
+} from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { FormlyFieldTabs } from '../tabs.type';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-vendor-onboarding',
   standalone: true,
-  imports:[RouterOutlet,FormlyFieldTabs,ReactiveFormsModule,FormlyMaterialModule,FormlyModule, MatToolbarModule,
-    CommonModule
+  imports: [
+    RouterOutlet,
+    FormlyFieldTabs,
+    ReactiveFormsModule,
+    FormlyMaterialModule,
+    FormlyModule,
+    MatToolbarModule,
+    CommonModule,
   ],
   templateUrl: './vendor-onboarding.component.html',
-  styleUrl: './vendor-onboarding.component.scss'
+  styleUrl: './vendor-onboarding.component.scss',
 })
-export class VendorOnboardingComponent implements OnInit{
+export class VendorOnboardingComponent implements OnInit {
   @Input() vendorId: any;
   form = new FormGroup({});
   model: any = {};
@@ -100,9 +111,9 @@ export class VendorOnboardingComponent implements OnInit{
                   { value: 'India', label: 'India' },
                   { value: 'China', label: 'China' },
                   { value: 'Japan', label: 'Japan' },
-                  { value: 'France', label: 'France'},
-                  { value: 'Germany', label: 'Germany'},
-                  { value: 'Italy', label: 'Italy'},
+                  { value: 'France', label: 'France' },
+                  { value: 'Germany', label: 'Germany' },
+                  { value: 'Italy', label: 'Italy' },
                 ],
               },
             },
@@ -130,7 +141,7 @@ export class VendorOnboardingComponent implements OnInit{
                 required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
-                  { value: 'No', label: 'No' }
+                  { value: 'No', label: 'No' },
                 ],
               },
             },
@@ -138,11 +149,12 @@ export class VendorOnboardingComponent implements OnInit{
               key: 'ghgEmissionInventoryAssurance',
               type: 'radio',
               props: {
-                label: 'Has your company has done GHG Emission inventory assurance by 3rd party?',
+                label:
+                  'Has your company has done GHG Emission inventory assurance by 3rd party?',
                 required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
-                  { value: 'No', label: 'No' }
+                  { value: 'No', label: 'No' },
                 ],
               },
             },
@@ -154,7 +166,7 @@ export class VendorOnboardingComponent implements OnInit{
                 required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
-                  { value: 'No', label: 'No' }
+                  { value: 'No', label: 'No' },
                 ],
               },
             },
@@ -198,7 +210,8 @@ export class VendorOnboardingComponent implements OnInit{
               key: 'reasonForNotCalculationgGhgEmissions',
               type: 'input',
               props: {
-                label: 'Please provide reasons for not calculating the GHG emissions',
+                label:
+                  'Please provide reasons for not calculating the GHG emissions',
                 required: false,
               },
               expressions: {
@@ -213,10 +226,10 @@ export class VendorOnboardingComponent implements OnInit{
                 required: false,
                 options: [
                   { value: 'Yes', label: 'Yes' },
-                  { value: 'No', label: 'No' }
+                  { value: 'No', label: 'No' },
                 ],
               },
-            }
+            },
           ],
         },
         {
@@ -252,10 +265,9 @@ export class VendorOnboardingComponent implements OnInit{
                         required: false,
                       },
                     },
-                    
-                  ]
-                }
-              ]
+                  ],
+                },
+              ],
             },
             {
               key: 'bankDetails',
@@ -265,7 +277,10 @@ export class VendorOnboardingComponent implements OnInit{
                 gridOptions: {
                   rowHeight: 42,
                   columnDefs: [
-                    'name', 'accountType', 'accountNumber', 'ifscCode'
+                    'name',
+                    'accountType',
+                    'accountNumber',
+                    'ifscCode',
                     // {
                     //   headerName: 'Name',
                     //   field: 'name',
@@ -274,14 +289,49 @@ export class VendorOnboardingComponent implements OnInit{
                     // }
                   ],
                   data: [
-                    {name: 'John', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Abram', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Cist', accountType: 'Savings', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Alphy', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Zench', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Linchy', accountType: 'Savings', accountNumber: '64432677', ifscCode: 'hcb43'},
-                    {name: 'Morgy', accountType: 'Current', accountNumber: '64432677', ifscCode: 'hcb43'},
-                  ]
+                    {
+                      name: 'John',
+                      accountType: 'Current',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Abram',
+                      accountType: 'Current',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Cist',
+                      accountType: 'Savings',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Alphy',
+                      accountType: 'Current',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Zench',
+                      accountType: 'Current',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Linchy',
+                      accountType: 'Savings',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                    {
+                      name: 'Morgy',
+                      accountType: 'Current',
+                      accountNumber: '64432677',
+                      ifscCode: 'hcb43',
+                    },
+                  ],
                 },
               },
             },
@@ -301,9 +351,9 @@ export class VendorOnboardingComponent implements OnInit{
                 placeholder: 'Please enter your comments here',
                 description: 'Please enter your comments',
                 required: false,
-              }
+              },
             },
-          ]
+          ],
         },
         {
           props: { label: 'Day of the trip' },
@@ -323,18 +373,32 @@ export class VendorOnboardingComponent implements OnInit{
     },
   ];
 
-  ngOnInit(): void {
-      this.previousData = JSON.parse(localStorage.getItem('submittedData') ?? '[]');
-      if(this.vendorId && this.previousData.length) {
-        const formData = this.previousData.find(data => data.id == this.vendorId)?.formData
-        this.model = { ...formData, id: this.vendorId };
+  constructor(private apiService: ApiService) {}
 
-      }
+  ngOnInit(): void {
+   if(this.vendorId){
+    this.getDataById(this.vendorId);
+   }
   }
+
   submit() {
-    alert(JSON.stringify(this.model));
-    this.previousData.push({id: this.model.accountNumber, status: 'Submitted' , formData: this.model})
-    localStorage.setItem('submittedData', JSON.stringify(this.previousData));
-    window.location.reload();
+    const data = {
+      file: '',
+      formData: this.model,
+      status: 'Submitted',
+    };
+    this.apiService.addData(data).subscribe();
+  }
+
+  getAllData() {
+    this.apiService.getAllSubmittedData().subscribe((data) => {
+      this.previousData = data;
+    });
+  }
+
+  getDataById(id: string) {
+    this.apiService.getDataById(id).subscribe((data) => {      
+      this.previousData = data;
+    });
   }
 }
