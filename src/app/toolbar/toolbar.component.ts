@@ -21,6 +21,6 @@ export class ToolbarComponent implements OnInit{
   }
   onLogOut() {
     localStorage.removeItem('loggedInUser');
-    this.router.navigate(['/login'])
+    this.router.navigate(['/login']);
   }
 }
