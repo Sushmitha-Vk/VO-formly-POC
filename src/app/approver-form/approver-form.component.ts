@@ -21,6 +21,7 @@ export class ApproverFormComponent implements OnInit {
 
   ngOnInit(): void {
       this.route.queryParams.subscribe((data: any) => this.vendorId = data.id);
+      if(!this.vendorId) this.router.navigate(['/inbox'])
   }
  
 }
