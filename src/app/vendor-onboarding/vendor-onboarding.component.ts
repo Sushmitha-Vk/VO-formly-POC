@@ -322,5 +322,6 @@ export class VendorOnboardingComponent implements OnInit{
     alert(JSON.stringify(this.model));
     this.previousData.push({id: this.model.accountNumber, status: 'Submitted' , formData: this.model})
     localStorage.setItem('submittedData', JSON.stringify(this.previousData));
+    window.location.reload();
   }
 }

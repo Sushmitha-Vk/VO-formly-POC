@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyModule } from '@ngx-formly/core';
@@ -66,8 +67,16 @@ import { FormlyModule } from '@ngx-formly/core';
     </mat-tab-group>
   `,
 })
-export class FormlyFieldTabs extends FieldType {
+export class FormlyFieldTabs extends FieldType implements OnInit {
   submittedData!: any[];
+
+  router = inject(Router);
+  user: any;
+
+  ngOnInit(): void {
+      this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+  }
+
   isValid(field: FormlyFieldConfig): boolean {
     if (field.key) {
       return field?.formControl?.valid || false;
@@ -97,8 +106,9 @@ export class FormlyFieldTabs extends FieldType {
     const index = this.submittedData.findIndex(
       (item) => item.id == this.model.id
     );
-    this.submittedData[index].status = 'Approved';
+    this.submittedData[index] = { ...this.submittedData[index], formData: this.model, status: 'Approved'};
     localStorage.setItem('submittedData', JSON.stringify(this.submittedData));
+    this.router.navigate(['/inbox']);
   }
 
   onReject() {
@@ -109,6 +119,10 @@ export class FormlyFieldTabs extends FieldType {
       (item) => item.id == this.model.id
     );
     this.submittedData[index].status = 'Rejected';
+    // this.submittedData[index].comments = `Rejected by ${this.user.email}`;
+
     localStorage.setItem('submittedData', JSON.stringify(this.submittedData));
+    this.router.navigate(['/inbox']);
+
   }
 }
