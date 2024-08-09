@@ -8,6 +8,8 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 enum Status {
   Submitted, Approved, Rejected
@@ -22,7 +24,7 @@ export interface InboxContent {
   selector: 'app-inbox',
   standalone: true,
   imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule,
-    MatButtonModule, ToolbarComponent
+    MatButtonModule, ToolbarComponent, CommonModule
   ],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
@@ -34,9 +36,11 @@ export class InboxComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private translate: TranslateService) {
     const formData = JSON.parse(localStorage.getItem('submittedData') || '[]');
     this.dataSource = new MatTableDataSource(formData);
+    // constructor(private translate: TranslateService) {
+    // }
   }
 
   ngAfterViewInit() {
