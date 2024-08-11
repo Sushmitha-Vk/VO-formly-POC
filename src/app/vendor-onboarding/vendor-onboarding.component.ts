@@ -230,6 +230,15 @@ export class VendorOnboardingComponent implements OnInit {
                 ],
               },
             },
+            {
+              key: 'listOfKeyBankers',
+              type: 'multi-select-autocomplete',
+              props: {
+                required: true,
+                label: 'Please provide a list of your key bankers',
+                options : ['State Bank Of India', 'Canara Bank', 'City Bank', 'HDFC Bank', 'ICICI Bank', 'Axis Bank', 'Central Bank']
+              },
+            },
           ],
         },
         {
