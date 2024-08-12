@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -13,11 +13,10 @@ import { Router } from '@angular/router';
   styleUrl: './toolbar.component.scss'
 })
 export class ToolbarComponent implements OnInit{
-  badgeCount: any;
+  @Input() badgeCount: any;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-      this.badgeCount = JSON.parse(localStorage.getItem('submittedData') || '[]').filter((data: any) => data.status === 'Submitted').length;
   }
   onLogOut() {
     localStorage.removeItem('loggedInUser');
