@@ -15,7 +15,7 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        <td mat-cell *matCellDef="let row">{{ row._id }}</td>
       </ng-container>
 
       <ng-container matColumnDef="accountNumber">
@@ -38,7 +38,7 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
-          <button color="primary" mat-button (click)="reviewAndApprove(row.id)">
+          <button color="primary" mat-button (click)="reviewAndApprove(row._id)">
             Review & Approve
           </button>
         </td>

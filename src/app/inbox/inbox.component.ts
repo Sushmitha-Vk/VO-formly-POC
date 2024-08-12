@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 import { ToolbarComponent } from '../toolbar/toolbar.component';
 import { TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../api.service';
 
 enum Status {
   Submitted, Approved, Rejected
 }
 export interface InboxContent {
-  id: string,
+  _id: string,
   formData: any,
   status: Status
 }
@@ -31,14 +32,21 @@ export interface InboxContent {
 })
 export class InboxComponent implements AfterViewInit{
   displayedColumns: string[] = ['id', 'accountNumber', 'panNo', 'status', 'action'];
-  dataSource: MatTableDataSource<InboxContent>;
+  dataSource: MatTableDataSource<InboxContent> = new MatTableDataSource([<InboxContent>{
+    _id: '',
+    formData: {},
+    status: Status.Submitted
+  }]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private router: Router, private translate: TranslateService) {
-    const formData = JSON.parse(localStorage.getItem('submittedData') || '[]');
-    this.dataSource = new MatTableDataSource(formData);
+  constructor(private router: Router, private apiServide: ApiService) {
+    // const formData = JSON.parse(localStorage.getItem('submittedData') || '[]');
+    this.apiServide.getAllSubmittedData().subscribe(data=> {
+      this.dataSource = new MatTableDataSource(data.data);
+    })
+    // this.dataSource = new MatTableDataSource(formData);
     // constructor(private translate: TranslateService) {
     // }
   }

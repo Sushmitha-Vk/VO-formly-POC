@@ -21,12 +21,15 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/onboarding`, data);
   }
 
-  getAllSubmittedData(): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/notification`);
+  getAllSubmittedData(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/notification`);
   }
 
-  getDataById(id:string): Observable<Data[]> {
-    return this.http.get<Data[]>(`${this.apiUrl}/notification/${id}`);
+  getDataById(id:string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/notification/${id}`);
   }
 
+  updateData(id: string, data: Data): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update-form/${id}`, data);
+  }
 }
