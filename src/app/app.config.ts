@@ -17,6 +17,8 @@ import { provideHttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormlyFieldStepper } from './stepper.type';
+import { MatStepperModule } from '@angular/material/stepper';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,6 +36,7 @@ export const appConfig: ApplicationConfig = {
         { name: 'exp-panel', component: FormlyFieldExpansionPanel },
         { name: 'table', component: FormlyFieldTable },
         { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },
+        { name: 'stepper', component: FormlyFieldStepper, wrappers: [] },
       ],
 
     }),
@@ -48,6 +51,7 @@ export const appConfig: ApplicationConfig = {
     MatNativeDateModule,
     FormlyMatDatepickerModule),
     MatAutocompleteModule,
+    MatStepperModule,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ]
   
