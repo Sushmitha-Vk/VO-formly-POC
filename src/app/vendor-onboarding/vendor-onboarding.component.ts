@@ -31,7 +31,143 @@ import { ApiService } from '../api.service';
 export class VendorOnboardingComponent implements OnInit {
   @Input() vendorId: any;
   form = new FormGroup({});
-  model: any = {};
+  model: any = {
+    profitLossStatement: [
+      {
+        year: 2024,
+        revenue: 750000,
+        costOfGoodsSold: 200000,
+        sellingGeneralAdministrativeCost: 90000,
+        ebitda: 460000,
+        depreciation: 30000,
+        operatingIncome: 430000,
+        interestExpense: 25000,
+        taxExpenses: 70000,
+        netIncome: 335000
+      },
+      {
+        year: 2024,
+        revenue: 600000,
+        costOfGoodsSold: 180000,
+        sellingGeneralAdministrativeCost: 85000,
+        ebitda: 335000,
+        depreciation: 20000,
+        operatingIncome: 315000,
+        interestExpense: 15000,
+        taxExpenses: 50000,
+        netIncome: 265000
+      },
+      {
+        year: 2024,
+        revenue: 800000,
+        costOfGoodsSold: 220000,
+        sellingGeneralAdministrativeCost: 95000,
+        ebitda: 485000,
+        depreciation: 25000,
+        operatingIncome: 460000,
+        interestExpense: 30000,
+        taxExpenses: 80000,
+        netIncome: 350000
+      },
+      {
+        year: 2024,
+        revenue: 550000,
+        costOfGoodsSold: 170000,
+        sellingGeneralAdministrativeCost: 75000,
+        ebitda: 335000,
+        depreciation: 15000,
+        operatingIncome: 320000,
+        interestExpense: 20000,
+        taxExpenses: 60000,
+        netIncome: 260000
+      },
+      {
+        year: 2024,
+        revenue: 700000,
+        costOfGoodsSold: 190000,
+        sellingGeneralAdministrativeCost: 88000,
+        ebitda: 422000,
+        depreciation: 22000,
+        operatingIncome: 400000,
+        interestExpense: 18000,
+        taxExpenses: 65000,
+        netIncome: 317000
+      },
+      {
+        year: 2024,
+        revenue: 650000,
+        costOfGoodsSold: 200000,
+        sellingGeneralAdministrativeCost: 80000,
+        ebitda: 370000,
+        depreciation: 25000,
+        operatingIncome: 345000,
+        interestExpense: 20000,
+        taxExpenses: 60000,
+        netIncome: 265000
+      },
+      {
+        year: 2024,
+        revenue: 720000,
+        costOfGoodsSold: 210000,
+        sellingGeneralAdministrativeCost: 95000,
+        ebitda: 415000,
+        depreciation: 27000,
+        operatingIncome: 388000,
+        interestExpense: 22000,
+        taxExpenses: 70000,
+        netIncome: 316000
+      },
+      {
+        year: 2024,
+        revenue: 800000,
+        costOfGoodsSold: 230000,
+        sellingGeneralAdministrativeCost: 90000,
+        ebitda: 480000,
+        depreciation: 30000,
+        operatingIncome: 450000,
+        interestExpense: 25000,
+        taxExpenses: 80000,
+        netIncome: 345000
+      },
+      {
+        year: 2024,
+        revenue: 670000,
+        costOfGoodsSold: 190000,
+        sellingGeneralAdministrativeCost: 85000,
+        ebitda: 395000,
+        depreciation: 20000,
+        operatingIncome: 375000,
+        interestExpense: 18000,
+        taxExpenses: 65000,
+        netIncome: 310000
+      },
+      {
+        year: 2024,
+        revenue: 740000,
+        costOfGoodsSold: 220000,
+        sellingGeneralAdministrativeCost: 88000,
+        ebitda: 432000,
+        depreciation: 24000,
+        operatingIncome: 408000,
+        interestExpense: 21000,
+        taxExpenses: 70000,
+        netIncome: 317000
+      },
+      {
+        year: 2024,
+        revenue: 620000,
+        costOfGoodsSold: 200000,
+        sellingGeneralAdministrativeCost: 80000,
+        ebitda: 340000,
+        depreciation: 18000,
+        operatingIncome: 322000,
+        interestExpense: 16000,
+        taxExpenses: 58000,
+        netIncome: 266000
+      }
+     
+    ],
+  };
   options: FormlyFormOptions = {};
   previousData: any[] = [];
   translate = inject(TranslateService);
@@ -365,17 +501,143 @@ export class VendorOnboardingComponent implements OnInit {
           ],
         },
         {
-          props: { label: 'Day of the trip' },
+          props: { label: 'Profit & Loss Statement' },
           fieldGroup: [
             {
-              key: 'day',
-              type: 'input',
+              key: 'profitLossStatement',
+              type: 'grid',
+              className: 'ag-theme-balham',
               props: {
-                type: 'date',
-                label: 'Day of the trip',
-                required: false,
+                height: '300px',
+                gridOptions: {
+                  rowHeight: 42,
+                  columnDefs: [
+                    {
+                      headerName: 'Year',
+                      field: 'year',
+                      sortable: true,
+                      width: 350,
+                    },
+                    {
+                      headerName: 'Revenue',
+                      field: 'revenue',
+                      sortable: true,
+                      width: 350,
+                    },
+                    {
+                      headerName: 'Cost of goods sold (COGS)',
+                      field: 'costOfGoodsSold',
+                      width: 330,
+                    },
+                    {
+                      headerName: 'Selling, General & administrative cost',
+                      field: 'sellingGeneralAdministrativeCost',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'EBITDA',
+                      field: 'ebitda',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'Depreciation and Amortization',
+                      field: 'depreciation',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'Operating income (EBIT)',
+                      field: 'operatingIncome',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'Interest expense',
+                      field: 'interestExpense',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'Tax expenses',
+                      field: 'taxExpenses',
+                      sortable: true,
+                      width: 350,
+                    },{
+                      headerName: 'Net income / PAT',
+                      field: 'netIncome',
+                      sortable: true,
+                      width: 350,
+                    },
+                  ],
+                }
               },
-            },
+              fieldArray: {
+                fieldGroup: [
+                  {
+                    type: 'input',
+                    key: 'year',
+                    props: {
+                      required: true,
+                    },
+                  },
+                  {
+                    type: 'input',
+                    key: 'revenue',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'costOfGoodsSold',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'sellingGeneralAdministrativeCost',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'ebitda',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'depreciation',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'operatingIncome',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'interestExpense',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'taxExpenses',
+                    props: {
+                      required: true,
+                    },
+                  },{
+                    type: 'input',
+                    key: 'netIncome',
+                    props: {
+                      required: true,
+                    },
+                  }
+                 
+                  
+                ],
+              }
+            }
+           
           ],
         },
       ],
@@ -388,6 +650,7 @@ export class VendorOnboardingComponent implements OnInit {
    if(this.vendorId){
     this.getDataById(this.vendorId);
    }
+   this.getAllData()
   }
 
   submit() {
@@ -402,6 +665,8 @@ export class VendorOnboardingComponent implements OnInit {
   getAllData() {
     this.apiService.getAllSubmittedData().subscribe((data) => {
       this.previousData = data;
+      console.log(data);
+
     });
   }
 
