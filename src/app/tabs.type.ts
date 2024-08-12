@@ -33,7 +33,7 @@ import { ApiService } from './api.service';
       >
         <formly-field [field]="tab"></formly-field>
         @if (last) {
-        <div fxLayout="row" fxLayoutAlign="space-around center">
+        <div fxLayout="row" fxLayoutAlign="space-around center" style="margin-top: 10px;">
           <button
             mat-flat-button
             color="primary"

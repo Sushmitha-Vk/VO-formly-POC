@@ -21,6 +21,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MultiSelectAutocompleteComponent } from './multi-select-autocomplete';
 import { FormlyFieldStepper } from './stepper.type';
 import { MatStepperModule } from '@angular/material/stepper';
+import { GridTypeComponent } from './grid.type';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,6 +41,14 @@ export const appConfig: ApplicationConfig = {
         { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },
         { name: 'multi-select-autocomplete', component: MultiSelectAutocompleteComponent, wrappers: ['form-field'] },
         { name: 'stepper', component: FormlyFieldStepper, wrappers: [] },
+        { name: 'grid', component: GridTypeComponent,
+          defaultOptions: {
+            props: {
+              width: '100%',
+              height: '400px',
+            },
+          },
+        }
       ],
 
     }),
