@@ -19,6 +19,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { MatChipsModule } from '@angular/material/chips';
 import { MultiSelectAutocompleteComponent } from './multi-select-autocomplete';
+import { FormlyFieldStepper } from './stepper.type';
+import { MatStepperModule } from '@angular/material/stepper';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,6 +39,7 @@ export const appConfig: ApplicationConfig = {
         { name: 'table', component: FormlyFieldTable },
         { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },
         { name: 'multi-select-autocomplete', component: MultiSelectAutocompleteComponent, wrappers: ['form-field'] },
+        { name: 'stepper', component: FormlyFieldStepper, wrappers: [] },
       ],
 
     }),
@@ -52,6 +55,7 @@ export const appConfig: ApplicationConfig = {
     FormlyMatDatepickerModule),
     MatAutocompleteModule,
     MatChipsModule,
+    MatStepperModule,
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ]
   
