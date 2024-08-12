@@ -37,7 +37,7 @@ export class VendorOnboardingComponent implements OnInit {
   translate = inject(TranslateService);
   fields: FormlyFieldConfig[] = [
     {
-      type: 'tabs',
+      type: 'stepper',
       fieldGroup: [
         {
           props: { label: 'Personal data' },
