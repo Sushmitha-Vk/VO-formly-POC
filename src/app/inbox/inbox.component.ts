@@ -31,6 +31,7 @@ export interface InboxContent {
   styleUrl: './inbox.component.scss'
 })
 export class InboxComponent implements AfterViewInit{
+  badgeCount!: number;
   displayedColumns: string[] = ['id', 'accountNumber', 'panNo', 'status', 'action'];
   dataSource: MatTableDataSource<InboxContent> = new MatTableDataSource([<InboxContent>{
     _id: '',
@@ -45,6 +46,7 @@ export class InboxComponent implements AfterViewInit{
     // const formData = JSON.parse(localStorage.getItem('submittedData') || '[]');
     this.apiServide.getAllSubmittedData().subscribe(data=> {
       this.dataSource = new MatTableDataSource(data.data);
+      this.badgeCount = data.count;
     })
     // this.dataSource = new MatTableDataSource(formData);
     // constructor(private translate: TranslateService) {
