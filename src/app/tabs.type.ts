@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { FormlyModule } from '@ngx-formly/core';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'formly-field-tabs',
@@ -72,6 +73,7 @@ export class FormlyFieldTabs extends FieldType implements OnInit {
 
   router = inject(Router);
   user: any;
+  apiService = inject(ApiService);
 
   ngOnInit(): void {
       this.user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
@@ -100,29 +102,14 @@ export class FormlyFieldTabs extends FieldType implements OnInit {
   }
 
   onApprove() {
-    this.submittedData = JSON.parse(
-      localStorage.getItem('submittedData') || '[]'
-    );
-    const index = this.submittedData.findIndex(
-      (item) => item.id == this.model.id
-    );
-    this.submittedData[index] = { ...this.submittedData[index], formData: this.model, status: 'Approved'};
-    localStorage.setItem('submittedData', JSON.stringify(this.submittedData));
-    this.router.navigate(['/inbox']);
+   this.apiService.updateData(this.model.id, {file: '', formData: this.model, status: 'Approved'}).subscribe(d=> {
+      this.router.navigate(['/inbox']);
+    });
   }
 
   onReject() {
-    this.submittedData = JSON.parse(
-      localStorage.getItem('submittedData') || '[]'
-    );
-    const index = this.submittedData.findIndex(
-      (item) => item.id == this.model.id
-    );
-    this.submittedData[index].status = 'Rejected';
-    // this.submittedData[index].comments = `Rejected by ${this.user.email}`;
-
-    localStorage.setItem('submittedData', JSON.stringify(this.submittedData));
-    this.router.navigate(['/inbox']);
-
+    this.apiService.updateData(this.model.id, {file: '', formData: this.model, status: 'Rejected'}).subscribe(d=> {
+      this.router.navigate(['/inbox']);
+    });
   }
 }

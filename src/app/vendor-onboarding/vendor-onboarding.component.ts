@@ -406,8 +406,9 @@ export class VendorOnboardingComponent implements OnInit {
   }
 
   getDataById(id: string) {
-    this.apiService.getDataById(id).subscribe((data) => {      
-      this.previousData = data;
+    this.apiService.getDataById(id).subscribe((data) => {  
+      this.previousData = data.formData;
+      this.model = { ...this.previousData, id: data._id};
     });
   }
 }

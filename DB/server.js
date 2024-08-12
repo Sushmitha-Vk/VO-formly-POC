@@ -89,6 +89,20 @@ app.get('/notification', async (req, res) => {
     }
   });
   
+  app.post('/update-form/:id', async (req, res) => {
+    try {
+      const result = await vendorOnboardingCollection.updateOne(
+        { _id: new ObjectId(req.body.formData.id)},
+        { $set:{
+          "formData": req.body.formData,
+          "status": req.body.status
+        }});
+      res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
+      
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
   
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
