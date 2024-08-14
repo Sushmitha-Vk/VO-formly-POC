@@ -1,7 +1,7 @@
 import { Component, computed, inject, model, OnInit, signal } from "@angular/core";
 import { FieldType } from "@ngx-formly/material";
 import { FieldTypeConfig } from "@ngx-formly/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
@@ -28,11 +28,11 @@ import { MatIconModule } from "@angular/material/icon";
   template: `
     <mat-chip-grid
       #chipGrid
-      [formControl]="formControl"
+      [formControl]="itemControl"
       [formlyAttributes]="field"
     >
-      @for (chip of chipsArr(); track $index) {
-      <mat-chip-row (removed)="removeChip(chip)">
+      @for (chip of formControl.value; track $index; let i= $index) {
+      <mat-chip-row (removed)="removeChip(i)">
         {{ chip }}
         <button matChipRemove [attr.aria-label]="'remove ' + chip">
           <mat-icon>cancel</mat-icon>
@@ -61,6 +61,7 @@ export class MultiSelectAutocompleteComponent extends FieldType<FieldTypeConfig>
   readonly chipsArr = signal<string[]>([]);
   readonly announcer = inject(LiveAnnouncer);
   tempArr: any;
+  itemControl = new FormControl();
 
   readonly filteredStates = computed(() => {
     const currentState = this.currentState().toLowerCase();
@@ -74,24 +75,23 @@ export class MultiSelectAutocompleteComponent extends FieldType<FieldTypeConfig>
 
   ngOnInit() {}
 
-  removeChip(chip: string): void {
-    this.chipsArr.update((element) => {
-      const index = element.indexOf(chip);
-      if (index >= 0) {
-        element.splice(index, 1);
-        this.announcer.announce(`Removed ${chip}`);
-      }
-      return [...element];
-    });
+  removeChip(i:any): void {
+    const value = this.formControl.value;    
+    this.formControl.setValue([
+      ...value.slice(0, i),
+      ...value.slice(i + 1, value.length)
+    ]);
+    this.formControl.markAsTouched()    
   }
 
   selectedChip(event: MatAutocompleteSelectedEvent): void {
-    const selectedValue = event.option.viewValue;
-    if (!this.chipsArr().includes(selectedValue)) {
-      this.chipsArr.update((element) => [...element, selectedValue]);
-    }
+    const data =  [
+      ...this.itemControl.value,
+      event.option.viewValue,
+    ]
+    this.formControl.setValue([...new Set(data)]);
+    this.itemControl.setValue("");
     this.currentState.set("");
-    event.option.deselect();
   }
 
 }
