@@ -34,7 +34,7 @@ import { ApiService } from './api.service';
         <formly-field [field]="tab"></formly-field>
         @if (last) {
         <div fxLayout="row" fxLayoutAlign="space-around center" style="margin-top: 10px;">
-          <button
+          <!--<button
             mat-flat-button
             color="primary"
             [disabled]="!form.valid"
@@ -43,7 +43,7 @@ import { ApiService } from './api.service';
           >
             Submit
           </button>
-          <button
+           <button
             mat-flat-button
             color="primary"
             (click)="onApprove()"
@@ -60,7 +60,7 @@ import { ApiService } from './api.service';
             type="button"
           >
             Reject
-          </button>
+          </button> -->
         </div>
         }
       </mat-tab>

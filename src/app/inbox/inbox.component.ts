@@ -47,6 +47,8 @@ export class InboxComponent implements AfterViewInit{
     this.apiServide.getAllSubmittedData().subscribe(data=> {
       this.dataSource = new MatTableDataSource(data.data);
       this.badgeCount = data.count;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
     // this.dataSource = new MatTableDataSource(formData);
     // constructor(private translate: TranslateService) {

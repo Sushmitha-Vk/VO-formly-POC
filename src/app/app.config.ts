@@ -22,6 +22,8 @@ import { MultiSelectAutocompleteComponent } from './multi-select-autocomplete';
 import { FormlyFieldStepper } from './stepper.type';
 import { MatStepperModule } from '@angular/material/stepper';
 import { GridTypeComponent } from './grid.type';
+import { FormlyFieldFile } from './file.types';
+import { MatInputModule } from '@angular/material/input';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,11 +50,13 @@ export const appConfig: ApplicationConfig = {
               height: '400px',
             },
           },
-        }
+        },
+        { name: 'file', component: FormlyFieldFile, wrappers: [] }
       ],
 
     }),
     HttpClientModule,
+    MatInputModule,
     TranslateModule.forRoot({
       loader: {
       provide: TranslateLoader,
