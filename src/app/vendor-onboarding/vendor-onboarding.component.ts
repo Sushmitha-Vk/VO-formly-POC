@@ -17,6 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../api.service';
+import {parse, stringify } from 'flatted';
 
 @Component({
   selector: 'app-vendor-onboarding',
@@ -720,5 +721,13 @@ export class VendorOnboardingComponent implements OnInit {
       this.previousData = data.formData;
       this.model = { ...this.previousData, id: data._id };
     });
+  }
+
+  createNewForm(){
+     const formData={
+        formName: 'vendor_onboarding',
+        formFieldConfigs: stringify(this.fields),
+    }
+    this.apiService.createNewForm(formData).subscribe();
   }
 }

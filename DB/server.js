@@ -1,11 +1,13 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 
 const app = express();
-
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 const uri = process.env.URI;
  
@@ -16,7 +18,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-let database, vendorOnboardingCollection;
+let database, vendorOnboardingCollection, form_json;
 
  
 async function connectDB() {
@@ -25,6 +27,7 @@ async function connectDB() {
     await client.db("formly_poc").command({ ping: 1 });
     database = client.db("formly_poc")
     vendorOnboardingCollection = database.collection('vendor_onboarding');
+    form_json = database.collection('form_json');
 
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
@@ -99,6 +102,51 @@ app.get('/notification', async (req, res) => {
         }});
       res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
       
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.post('/update-form-configs/:id', async (req, res) => {
+    try {
+      const result = await form_json.updateOne(
+        { _id: new ObjectId(req.body.id)},
+        { $set:{
+          "formName": req.body.formName,
+          "formFieldConfigs": req.body.formFieldConfigs
+        }});
+      res.json({ message: 'Data updated successfully', Id: req.body.id });
+      
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.get('/get-form-configs/:id', async (req, res) => {
+    try {
+      const id = req.params.id;
+      if (!ObjectId.isValid(id)) {
+        return res.status(400).json({ message: 'Invalid ID format' });
+      }
+      const formJson = await form_json.findOne({ _id: new ObjectId(id) });
+      if (formJson) {        
+        res.json(formJson);
+      } else {
+        res.status(404).json({ message: 'Data not found' });
+      }
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  });
+
+  app.post('/create-new-form', async (req, res) => {
+    try {
+        const newData = {
+            formName: req.body.formName,
+            formFieldConfigs: req.body.formFieldConfigs
+        };    
+      const result = await form_json.insertOne(newData);
+      res.json({ message: 'Data added successfully', Id: result.insertedId });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
