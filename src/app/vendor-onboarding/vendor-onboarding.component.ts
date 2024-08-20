@@ -697,10 +697,10 @@ export class VendorOnboardingComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getFormById('66c425f163cbf14433472d4a').subscribe((form)=>{
       this.fields = parse(form.formFieldConfigs)
+      if (this.vendorId) {
+        this.getDataById(this.vendorId);
+      }
     })
-    if (this.vendorId) {
-      this.getDataById(this.vendorId);
-    }
     this.getAllData();
   }
 
