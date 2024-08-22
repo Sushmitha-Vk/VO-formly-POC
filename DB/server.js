@@ -20,7 +20,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-let database, vendorOnboardingCollection, form_json;
+let database, vendorOnboardingCollection, form_json, formSchema;
 
 
 async function connectDB() {
@@ -68,8 +68,7 @@ app.get('/notification', async (req, res) => {
             formData: req.body.formData,
             status: req.body.status
         };
-
-        const formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
+        formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
         if (formSchema) {        
           const schema = parse(formSchema.formFieldConfigs);
           const validationResult = inspector.validate(schema, newData.formData);
@@ -110,14 +109,25 @@ app.get('/notification', async (req, res) => {
   
   app.post('/update-form/:id', async (req, res) => {
     try {
-      const result = await vendorOnboardingCollection.updateOne(
-        { _id: new ObjectId(req.body.formData.id)},
-        { $set:{
-          "formData": req.body.formData,
-          "status": req.body.status
-        }});
-      res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
-      
+        formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
+        if (formSchema) {        
+          const schema = parse(formSchema.formFieldConfigs);
+          const validationResult = inspector.validate(schema, req.body.formData);
+          if (!validationResult.valid) {
+            res.status(500).json({ error: validationResult.error });
+          }
+          else {
+            const result = await vendorOnboardingCollection.updateOne(
+              { _id: new ObjectId(req.body.formData.id)},
+              { $set:{
+                "formData": req.body.formData,
+                "status": req.body.status
+              }});
+              res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
+            }
+        } else {
+          res.status(404).json({ message: 'Form schema for validation of data not found in DB, please check schema id' });
+        }      
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
