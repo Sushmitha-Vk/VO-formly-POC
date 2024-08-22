@@ -4,6 +4,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+const { parse, stringify } = require('flatted');
+const inspector = require('schema-inspector');
 
 const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -20,7 +22,7 @@ const client = new MongoClient(uri, {
 });
 let database, vendorOnboardingCollection, form_json;
 
- 
+
 async function connectDB() {
   try {
     await client.connect();
@@ -66,9 +68,23 @@ app.get('/notification', async (req, res) => {
             formData: req.body.formData,
             status: req.body.status
         };
-    
-      const result = await vendorOnboardingCollection.insertOne(newData);
-      res.json({ message: 'Data added successfully', Id: result.insertedId });
+
+        const formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
+        if (formSchema) {        
+          const schema = parse(formSchema.formFieldConfigs);
+          const validationResult = inspector.validate(schema, newData.formData);
+          if (!validationResult.valid) {
+            res.status(500).json({ error: validationResult.error });
+          }
+          else {
+            const result = await vendorOnboardingCollection.insertOne(newData);
+            res.json({ message: 'Data added successfully', Id: result.insertedId });
+          }
+        } else {
+          res.status(404).json({ message: 'Form schema for validation of data not found in DB, please check schema id' });
+        }
+      // const result = await vendorOnboardingCollection.insertOne(newData);
+      // res.json({ message: 'Data added successfully', Id: result.insertedId });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
