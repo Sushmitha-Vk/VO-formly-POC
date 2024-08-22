@@ -176,7 +176,7 @@ export class VendorOnboardingComponent implements OnInit {
   options: FormlyFormOptions = {};
   previousData: any[] = [];
   translate = inject(TranslateService);
-  fields!: FormlyFieldConfig[] ;
+  fields!: FormlyFieldConfig[] 
   // =
   //  [
   //   {
@@ -190,7 +190,11 @@ export class VendorOnboardingComponent implements OnInit {
   //           required: false,
   //         },
   //         // expressions: {
-  //         //   'props.label': this.translate.stream('FORM.PANNUMBER'),
+  //         //   hide: (field: FormlyFieldConfig) => {
+  //         //     console.log('--y--', field);
+  //         //     return false;
+  //         //   },
+
   //         // },
   //       },
   //       {
@@ -347,7 +351,7 @@ export class VendorOnboardingComponent implements OnInit {
   //                       required: false,
   //                     },
   //                     expressions: {
-  //                       hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
+  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
   //                     },
   //                   },
   //                   {
@@ -359,7 +363,7 @@ export class VendorOnboardingComponent implements OnInit {
   //                       required: false,
   //                     },
   //                     expressions: {
-  //                       hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
+  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
   //                     },
   //                   },
   //                   {
@@ -371,7 +375,7 @@ export class VendorOnboardingComponent implements OnInit {
   //                       required: false,
   //                     },
   //                     expressions: {
-  //                       hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
+  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
   //                     },
   //                   },
   //                   {
@@ -383,7 +387,7 @@ export class VendorOnboardingComponent implements OnInit {
   //                       required: false,
   //                     },
   //                     expressions: {
-  //                       hide: "model.doesYourCompanyCalculateTheGhgEmissions !== 'No'",
+  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'No'",
   //                     },
   //                   },
   //                   {
@@ -754,7 +758,7 @@ export class VendorOnboardingComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getFormById('66c6fbdb7d2b2911687d8fe9').subscribe((form)=>{
+    this.apiService.getFormById('66c7174609d62049315b4cb1').subscribe((form)=>{
       this.fields = parse(form.formFieldConfigs)
       if (this.vendorId) {
         this.getDataById(this.vendorId);
