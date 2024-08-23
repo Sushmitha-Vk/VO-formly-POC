@@ -22,12 +22,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           Account Number
         </th>
-        <td mat-cell *matCellDef="let row">{{ row.formData.accountNumber }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.formData?.personalDataStep?.accountNumber }}</td>
       </ng-container>
 
       <ng-container matColumnDef="panNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Pan Number</th>
-        <td mat-cell *matCellDef="let row">{{ row.formData.panNo }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.formData?.personalDataStep?.panNo }}</td>
       </ng-container>
 
       <ng-container matColumnDef="status">
