@@ -2,7 +2,10 @@ const express = require('express');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+mongoose.pluralize(null);
 require('dotenv').config();
+const dot = require('dot-object');
 
 const { parse, stringify } = require('flatted');
 const inspector = require('schema-inspector');
@@ -12,7 +15,63 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 const uri = process.env.URI;
- 
+mongoose.connect(uri, {
+  dbName: 'formly_poc',
+}).then(() => console.log("Database connected!"))
+    .catch(err => console.log(err));
+   
+const formSchema = new mongoose.Schema({
+  formData: {
+    id: String,
+    personalDataStep: {
+      panNo: {
+        type: String,
+        required: true,
+        minlength: [3, 'Pan must be at least 3 characters long'],
+      },
+      accountNumber: Number,
+      remarks: String,
+      acceptTerms:  {
+        type: Boolean,
+        required: false
+      },
+    },
+    esgStep: {
+        countryOfHeadQuarter: {
+          type: String,
+          required: true,
+        },
+        doesYourCompUseRenewableElectricity: String,
+        doesYourCompanyCalculateTheGhgEmissions: String,
+        ghgEmissionInventoryAssurance: String,
+        noOfEmployees: Number,
+        revenue: String,
+        scope1Emissions: String,
+        scope2Emissions: String,
+        scope3Emissions: String,
+        yourGhgEmissionsDataArePublished: String,
+        listOfKeyBankers:  {
+          type: Array,
+          required: false
+        },
+    },
+    accountDetailsStep: {
+      country: String,
+      state: String,
+      pin: Number
+    },
+    commentStep: {
+      comment: String
+    }
+  },
+  file: String,
+  status: {
+    type: String,
+    enum: ['Approved', 'Submitted', 'Rejected'],
+    required: true
+  }
+});
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -20,7 +79,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
-let database, vendorOnboardingCollection, form_json, formSchema;
+let database, vendorOnboardingCollection, form_json;
 
 
 async function connectDB() {
@@ -30,7 +89,6 @@ async function connectDB() {
     database = client.db("formly_poc")
     vendorOnboardingCollection = database.collection('vendor_onboarding');
     form_json = database.collection('form_json');
-
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
    
@@ -68,20 +126,19 @@ app.get('/notification', async (req, res) => {
             formData: req.body.formData,
             status: req.body.status
         };
-        formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
-        if (formSchema) {        
-          const schema = parse(formSchema.formFieldConfigs);
-          const validationResult = inspector.validate(schema, newData.formData);
-          if (!validationResult.valid) {
-            res.status(500).json({ error: validationResult.error });
-          }
-          else {
-            const result = await vendorOnboardingCollection.insertOne(newData);
-            res.json({ message: 'Data added successfully', Id: result.insertedId });
-          }
-        } else {
-          res.status(404).json({ message: 'Form schema for validation of data not found in DB, please check schema id' });
-        }
+        const formDat = mongoose.model('vendor_onboarding', formSchema);
+        const vo = new formDat(newData);
+        (async () => {
+            try {
+                await vo.save().then((result) => {
+                  res.json({ message: 'Data added successfully', Id: result._id })
+                });
+            } catch (err) {
+                res.status(500).json(err);
+            }
+        })();
+
+
       // const result = await vendorOnboardingCollection.insertOne(newData);
       // res.json({ message: 'Data added successfully', Id: result.insertedId });
     } catch (err) {
@@ -109,27 +166,28 @@ app.get('/notification', async (req, res) => {
   
   app.post('/update-form/:id', async (req, res) => {
     try {
-        formSchema = await form_json.findOne({ _id: new ObjectId('66c6fbf67d2b2911687d8fea') });
-        if (formSchema) {        
-          const schema = parse(formSchema.formFieldConfigs);
-          const validationResult = inspector.validate(schema, req.body.formData);
-          if (!validationResult.valid) {
-            res.status(500).json({ error: validationResult.error });
+        const id = req.body.formData.id;
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ message: 'Invalid ID format' });
+        }
+        const dotifiedObject = dot.dot(req.body);
+        const formDat = mongoose.model('vendor_onboarding', formSchema);
+        const filter = { _id: new ObjectId(id)};
+        const update = dotifiedObject;
+        
+        await formDat.findOneAndUpdate(
+          filter,
+          update,
+          {
+            new: true,
+            runValidators: true,
+            context: 'query',
           }
-          else {
-            const result = await vendorOnboardingCollection.updateOne(
-              { _id: new ObjectId(req.body.formData.id)},
-              { $set:{
-                "formData": req.body.formData,
-                "status": req.body.status
-              }});
-              res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
-            }
-        } else {
-          res.status(404).json({ message: 'Form schema for validation of data not found in DB, please check schema id' });
-        }      
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+        );
+
+      res.json({ message: 'Data updated successfully', Id: req.body.formData.id });
+    } catch (error) {
+      res.status(404).json(error);
     }
   });
 
