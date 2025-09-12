@@ -17,12 +17,12 @@ export const routes: Routes = [
     {
         path: 'approval-form',
         component: ApproverFormComponent,
-        canActivate: [authGuard] 
+        canActivate: [] 
     },
     {
         path: 'inbox',
         component: InboxComponent,
-        canActivate: [authGuard] 
+        canActivate: [] 
     },
     {
         path: 'vendor-onboarding',
