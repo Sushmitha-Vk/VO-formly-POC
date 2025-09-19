@@ -39,7 +39,7 @@ export const appConfig: ApplicationConfig = {
       validationMessages: [{ name: 'required', message: 'This field is required' }],
       types: [
         { name: 'tabs', component: FormlyFieldTabs },
-        { name: 'mu-ht-input', component: MnlFormHelperTextInputComponent },
+        { name: 'mu-helper-text', component: MnlFormHelperTextInputComponent },
         { name: 'exp-panel', component: FormlyFieldExpansionPanel },
         { name: 'table', component: FormlyFieldTable },
         { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },

@@ -180,25 +180,26 @@ export class VendorOnboardingComponent implements OnInit {
   =
    [
     {
-      key: 'remarks',
-      type: 'mu-ht-input',
-      props: {
-        // label: 'Remaks,if any',
-        // placeholder: 'Please enter your message here',
-        // description: 'Please enter your message',
-        helperLabel: 'Helper',
-        value: 'True',
-        required: false,
-        scoring: {
-          criteria: 'exactMatch',
-          answer: ['True'],
-        }
-      },
-      defaultValue: "default val",
-      expressions: {
-        'props.label': this.translate.stream('FORM.REMARKS'),
-      },
-    },
+          key: 'companyName',
+          type: 'mu-helper-text',
+          props: {
+            label: 'Company Name',
+            helperLabel: 'Need help?',
+            value: '',
+            enableHelper: false,
+            readonly: false,
+            defaultFieldConfig: {
+              type: 'input',
+              props: {
+                label: 'Company Name',
+                placeholder: '',
+                rows: 4,
+                readonly: false,
+              },
+              wrappers: ['form-field'],
+            },
+          },
+        },
   ];
 
   schemaDefinition = {

@@ -57,7 +57,7 @@ export class AppComponent {
   fields: FormlyFieldConfig[] = [
   {
       key: 'username',
-      type: 'mu-ht-input', // <-- registered type for MnlFormHelperTextInputComponent
+      type: 'mu-helper-text', // <-- registered type for MnlFormHelperTextInputComponent
       props: {
         label: 'Username',
         placeholder: 'Enter your username',
