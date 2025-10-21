@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,21 +34,22 @@ import { FieldType } from '@ngx-formly/material';
       <!-- Helper Mode - Show toggle and conditional content -->
       <div *ngIf="to['enableHelper']">
         <mat-label>{{ to.label }}</mat-label>
-        <div *ngIf="to['value']" class="flex-row">
-          <span class="answer">Answer: {{ to['value'] }}</span>
+        <div *ngIf="originalValue" class="flex-row">
+          <span class="answer">{{ originalValue }}</span>
           <mat-slide-toggle
             [(ngModel)]="checked"
             (toggleChange)="toggleSlide()"
-            >{{ to['helperLabel'] }}</mat-slide-toggle
+            [disabled]="field.form?.disabled || false"
+            >{{ helperLabel }}</mat-slide-toggle
           >
         </div>
 
         <mat-form-field class="textarea" appearance="outline" *ngIf="checked">
           <textarea
             matInput
-            [formControl]="formControl"
-            [formlyAttributes]="field"
-            [readonly]="to['readonly']"
+            [formControl]="helperFormControl"
+            [readonly]="readonly || field.form?.disabled"
+            [disabled]="field.form?.disabled||false"
           >
           </textarea>
         </mat-form-field>
@@ -88,6 +89,51 @@ export class MnlFormHelperTextInputComponent
   implements OnInit
 {
   checked = false;
+  helperFormControl!: FormControl; // Separate form control for helper model
+
+  get helperLabel() {
+    return this.to['helperProps']?.['helperLabel'] || 'Need help?';
+  }
+  get defaultHelperText() {
+    return this.to['helperProps']?.['defaultHelperText'] || '';
+  }
+
+  // Get value from primary model (answers)
+  get originalValue() {
+    const fieldKey = this.field.key as string;
+    return this.field.model?.[fieldKey];
+  }
+
+  // Get/Set value from secondary model (helper)
+  get helperModel() {
+    return (
+      this.to['helperModel'] ||
+      this.props['helperModel'] ||
+      this.options?.formState?.['helperModel']
+    );
+  }
+
+  get helperKey() {
+    return this.to['helperKey'] || this.field.key;
+  }
+
+  get currentHelperValue() {
+    if (this.helperModel && this.helperKey) {
+      return this.helperModel[this.helperKey as string];
+    }
+    return '';
+  }
+
+  set currentHelperValue(value: any) {
+    if (this.helperModel && this.helperKey) {
+      this.helperModel[this.helperKey as string] = value;
+    }
+  }
+
+  get readonly() {
+    return this.to['readonly'] || this.props['readonly'] || false;
+  }
+
   defaultFieldConfig?: FormlyFieldConfig;
 
   constructor(private cdr: ChangeDetectorRef) {
@@ -95,17 +141,38 @@ export class MnlFormHelperTextInputComponent
   }
 
   ngOnInit() {
+    // Initialize helper form control with value from helper model
+    this.helperFormControl = new FormControl(this.currentHelperValue || '');
+
+    // Subscribe to changes in helper form control and update helper model
+    this.helperFormControl.valueChanges.subscribe((value) => {
+      this.currentHelperValue = value;
+      // Emit helper model change to parent component
+      this.options?.formState?.['onHelperModelChange']?.(this.helperModel);
+    });
+
     this.setupDefaultField();
 
-    // If mode is helper, set up the initial state based on scoring
     if (this.to['enableHelper']) {
-        this.setCorrectValue();
+      this.setCorrectValue();
       this.determineInitialState();
+    }
+    if (this.currentHelperValue && this.currentHelperValue.trim() !== '') {
+      this.checked = true;
     }
   }
 
   toggleSlide() {
     this.checked = !this.checked;
+    if (this.checked) {
+      // When toggle is opened, check if helper field is empty
+      const currenthelper = this.helperFormControl.value;
+      if (!currenthelper || currenthelper.trim() === '') {
+        this.helperFormControl.setValue(this.defaultHelperText);
+      }
+    } else {
+      this.helperFormControl.setValue('');
+    }
     this.cdr.detectChanges();
   }
 
@@ -116,7 +183,6 @@ export class MnlFormHelperTextInputComponent
         ...fieldConfig,
         key: this.field.key || fieldConfig.key || 'defaultKey',
         formControl: this.formControl,
-        // Add required properties that formly expects
         modelOptions: fieldConfig.modelOptions || this.field.modelOptions || {},
         validators: fieldConfig.validators || this.field.validators || {},
         asyncValidators:
@@ -129,7 +195,6 @@ export class MnlFormHelperTextInputComponent
           fieldConfig.fieldGroupClassName ||
           this.field.fieldGroupClassName ||
           '',
-        // Inherit parent field's form and model
         parent: this.field.parent,
         options: this.field.options,
         model: this.field.model,
@@ -144,14 +209,14 @@ export class MnlFormHelperTextInputComponent
       case 'exactMatch':
         if (
           Array.isArray(this.to['scoring']?.['answer']) &&
-          !this.to['scoring']?.['answer'].includes(this.to['value'])
+          !this.to['scoring']?.['answer'].includes(this.originalValue)
         ) {
           this.checked = true;
         }
         break;
 
       case 'range':
-        const answer = this.to['value'];
+        const answer = this.originalValue;
         const num = typeof answer === 'number' ? answer : Number(answer);
 
         const correct =
@@ -167,22 +232,33 @@ export class MnlFormHelperTextInputComponent
   }
 
   setCorrectValue() {
+    const currentHelperValue = this.currentHelperValue;
+
+    // If helper already has a value (user edited), don't override
+    if (currentHelperValue && currentHelperValue.trim() !== '') {
+      return;
+    }
+
     switch (this.to['scoring']?.['criteria']) {
       case 'attempted':
-        this.formControl?.setValue(this.to['value']);
+        // For attempted, set defaultHelperText
+        this.helperFormControl.setValue('');
         break;
 
       case 'exactMatch':
-        if (
-          Array.isArray(this.to['scoring']?.['answer']) &&
-          !this.to['scoring']?.['answer'].includes(this.to['value'])
-        ) {
-          this.formControl?.setValue(this.to['scoring']['answer'].join(', '));
+        if (Array.isArray(this.to['scoring']?.['answer'])) {
+          if (this.to['scoring']?.['answer'].includes(this.originalValue)) {
+            // Answer is correct - set empty value in helper
+            this.helperFormControl.setValue('');
+          } else {
+            // Answer is incorrect - set defaultHelperText in helper
+            this.helperFormControl.setValue(this.defaultHelperText);
+          }
         }
         break;
 
       case 'range':
-        const answer = this.to['value'];
+        const answer = this.originalValue;
         const num = typeof answer === 'number' ? answer : Number(answer);
 
         const correct =
@@ -190,15 +266,16 @@ export class MnlFormHelperTextInputComponent
           num >= this.to['scoring']?.['answer'].min &&
           num <= this.to['scoring']?.['answer'].max;
 
-        if (!correct) {
-          this.formControl?.setValue(
-            `Value must be in range of ${this.to['scoring']?.['answer'].min} & ${this.to['scoring']?.['answer'].max}`
-          );
+        if (correct) {
+          // Answer is correct - set empty value in helper
+          this.helperFormControl.setValue('');
+        } else {
+          // Answer is incorrect - set defaultHelperText in helper
+          this.helperFormControl.setValue(this.defaultHelperText);
         }
         break;
 
-        default:
-            this.formControl?.setValue(this.to['value']);
+      default:
         break;
     }
   }

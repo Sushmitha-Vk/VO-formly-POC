@@ -37,170 +37,276 @@ import {parse, stringify } from 'flatted';
 export class VendorOnboardingComponent implements OnInit {
   @Input() vendorId: any;
   form = new FormGroup({});
-  model: any = {
-    profitLossStatement: [
-      {
-        year: 2024,
-        revenue: 750000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 90000,
-        ebitda: 460000,
-        depreciation: 30000,
-        operatingIncome: 430000,
-        interestExpense: 25000,
-        taxExpenses: 70000,
-        netIncome: 335000,
-      },
-      {
-        year: 2024,
-        revenue: 600000,
-        costOfGoodsSold: 180000,
-        sellingGeneralAdministrativeCost: 85000,
-        ebitda: 335000,
-        depreciation: 20000,
-        operatingIncome: 315000,
-        interestExpense: 15000,
-        taxExpenses: 50000,
-        netIncome: 265000,
-      },
-      {
-        year: 2024,
-        revenue: 800000,
-        costOfGoodsSold: 220000,
-        sellingGeneralAdministrativeCost: 95000,
-        ebitda: 485000,
-        depreciation: 25000,
-        operatingIncome: 460000,
-        interestExpense: 30000,
-        taxExpenses: 80000,
-        netIncome: 350000,
-      },
-      {
-        year: 2024,
-        revenue: 550000,
-        costOfGoodsSold: 170000,
-        sellingGeneralAdministrativeCost: 75000,
-        ebitda: 335000,
-        depreciation: 15000,
-        operatingIncome: 320000,
-        interestExpense: 20000,
-        taxExpenses: 60000,
-        netIncome: 260000,
-      },
-      {
-        year: 2024,
-        revenue: 700000,
-        costOfGoodsSold: 190000,
-        sellingGeneralAdministrativeCost: 88000,
-        ebitda: 422000,
-        depreciation: 22000,
-        operatingIncome: 400000,
-        interestExpense: 18000,
-        taxExpenses: 65000,
-        netIncome: 317000,
-      },
-      {
-        year: 2024,
-        revenue: 650000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 80000,
-        ebitda: 370000,
-        depreciation: 25000,
-        operatingIncome: 345000,
-        interestExpense: 20000,
-        taxExpenses: 60000,
-        netIncome: 265000,
-      },
-      {
-        year: 2024,
-        revenue: 720000,
-        costOfGoodsSold: 210000,
-        sellingGeneralAdministrativeCost: 95000,
-        ebitda: 415000,
-        depreciation: 27000,
-        operatingIncome: 388000,
-        interestExpense: 22000,
-        taxExpenses: 70000,
-        netIncome: 316000,
-      },
-      {
-        year: 2024,
-        revenue: 800000,
-        costOfGoodsSold: 230000,
-        sellingGeneralAdministrativeCost: 90000,
-        ebitda: 480000,
-        depreciation: 30000,
-        operatingIncome: 450000,
-        interestExpense: 25000,
-        taxExpenses: 80000,
-        netIncome: 345000,
-      },
-      {
-        year: 2024,
-        revenue: 670000,
-        costOfGoodsSold: 190000,
-        sellingGeneralAdministrativeCost: 85000,
-        ebitda: 395000,
-        depreciation: 20000,
-        operatingIncome: 375000,
-        interestExpense: 18000,
-        taxExpenses: 65000,
-        netIncome: 310000,
-      },
-      {
-        year: 2024,
-        revenue: 740000,
-        costOfGoodsSold: 220000,
-        sellingGeneralAdministrativeCost: 88000,
-        ebitda: 432000,
-        depreciation: 24000,
-        operatingIncome: 408000,
-        interestExpense: 21000,
-        taxExpenses: 70000,
-        netIncome: 317000,
-      },
-      {
-        year: 2024,
-        revenue: 620000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 80000,
-        ebitda: 340000,
-        depreciation: 18000,
-        operatingIncome: 322000,
-        interestExpense: 16000,
-        taxExpenses: 58000,
-        netIncome: 266000,
-      },
-    ],
-  };
+  model: any = {}
+//   {
+//   exact_match_correct: "Yes",
+//   exact_match_incorrect: "No",
+//   range_within_correct: 150,
+//   range_outside_incorrect: 2,
+//   attempted_criteria: "Basic security measures",
+//   no_helper_disabled: "technology"
+// };
   options: FormlyFormOptions = {};
   previousData: any[] = [];
   translate = inject(TranslateService);
-  fields: FormlyFieldConfig[] 
-  =
-   [
-    {
-          key: 'companyName',
-          type: 'mu-helper-text',
-          props: {
-            label: 'Company Name',
-            helperLabel: 'Need help?',
-            value: '',
-            enableHelper: false,
-            readonly: false,
-            defaultFieldConfig: {
-              type: 'input',
-              props: {
-                label: 'Company Name',
-                placeholder: '',
-                rows: 4,
-                readonly: false,
-              },
-              wrappers: ['form-field'],
-            },
-          },
+  fields: FormlyFieldConfig[] = [
+  {
+    "key": "question15",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "If you selected “Others” in the previous question, please specify the management system(s).",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": ""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": false,
+      "readonly": false,
+      "scoring": {
+        "criteria": "attempted"
+      },
+      "defaultFieldConfig": {
+        "type": "input",
+        "props": {
+          "label": "If you selected “Others” in the previous question, please specify the management system(s).",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true
         },
-  ];
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "type": "select",
+    "key": "selectTest",
+    "props": {
+      "label": "Select Test",
+      "placeholder": "",
+      "appearance": "outline",
+      "readonly": false,
+      "required": true,
+      "options": [
+        {
+          "label": "Yes Working",
+          "value": "Yes Working"
+        },
+        {
+          "label": "No",
+          "value": "No"
+        }
+      ]
+    }
+  },
+  {
+    "key": "question8",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you undertake risk assessment to identify potential impacts/opportunities across your value chain?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Risk assessments help proactively identify environmental, social, and operational risks and opportunities, ensuring resilience and responsible decision-making.\nCorrective Action: Establish a structured risk assessment process covering key areas such as supply chain, compliance, sustainability, and stakeholder impact.\nPreventive Action: Integrate risk management into strategic planning, conduct periodic reviews, and engage cross-functional teams to ensure continuous improvement."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you undertake risk assessment to identify potential impacts/opportunities across your value chain?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question9",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you have any ongoing litigation or regulatory notices with respect to compliance?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Timely disclosure and resolution of litigation or regulatory notices are critical to maintaining trust, legal compliance, and business continuity.\nCorrective Action: Document all ongoing cases, assess root causes, and implement immediate remedial actions in consultation with legal and compliance teams.\nPreventive Action: Establish a compliance monitoring framework and conduct periodic legal risk assessments to proactively identify and mitigate future issues."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["No"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you have any ongoing litigation or regulatory notices with respect to compliance?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question10",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Is there any legal proceedings associated with fraud, anti-corruption, bribery, unfair labor practices, human rights abuses or other malpractices?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Addressing such legal issues is vital to uphold ethical standards, protect stakeholder trust, and ensure regulatory compliance.\nCorrective Action:  Document and disclose case details, cooperate with investigations, and implement immediate corrective measures including leadership accountability and policy enforcement.\nPreventive Action: Strengthen internal controls, conduct regular ethics and compliance training, and establish whistleblower mechanisms to prevent recurrence."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["No"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Is there any legal proceedings associated with fraud, anti-corruption, bribery, unfair labor practices, human rights abuses or other malpractices?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question11",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Does your company have any sustainability certifications (Ecovadis/SEDEX/FSC/RSPO)?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Sustainability certifications validate responsible practices and enhance credibility with stakeholders, regulators, and customers.\nCorrective Action: Supplier to initiate the process of obtaining relevant certifications if required and relevant (e.g., Ecovadis, SEDEX, FSC, RSPO) aligned with their operations and industry standards.\nPreventive Action: Develop a sustainability roadmap with periodic reviews to ensure continuous improvement and readiness for future certification requirements.\""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Does your company have any sustainability certifications (Ecovadis/SEDEX/FSC/RSPO)?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question12",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you have an Information Security Policy?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: An Information Security Policy is essential to safeguard sensitive data, ensure regulatory compliance, and protect against cyber threats.\nCorrective Action: Supplier to develop and implement a formal Information Security Policy covering data protection, access control, and incident response.\nPreventive Action: Conduct regular security audits, employee training, and policy reviews to maintain robust information security practices.\""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you have an Information Security Policy?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  }
+];
 
   schemaDefinition = {
     type: 'object',
@@ -238,6 +344,10 @@ export class VendorOnboardingComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
+    this.model = JSON.parse(localStorage.getItem('ModelData') || '{}');
+    console.log(this.model);
+    // this.form.disable({emitEvent: false});
+    // If you have a specific form ID to fetch, you can uncomment and use the following line
     // this.apiService.getFormById('66c7174609d62049315b4cb1').subscribe((form)=>{
     //   this.fields = parse(form.formFieldConfigs)
     //   if (this.vendorId) {
@@ -248,12 +358,8 @@ export class VendorOnboardingComponent implements OnInit {
   }
 
   submit() {
-    const data = {
-      file: '',
-      formData: this.model,
-      status: 'Submitted',
-    };
-    this.apiService.addData(data).subscribe();
+   localStorage.setItem('ModelData', JSON.stringify(this.model));
+
   }
 
   getAllData() {
