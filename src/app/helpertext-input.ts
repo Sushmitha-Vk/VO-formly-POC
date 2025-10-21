@@ -179,10 +179,31 @@ export class MnlFormHelperTextInputComponent
   setupDefaultField() {
     const fieldConfig = this.to['defaultFieldConfig'];
     if (fieldConfig) {
+      // Get current value from model and sync with formControl
+      const fieldKey = this.field.key as string;
+      const modelValue = this.field.model?.[fieldKey];
+      
+      // Sync formControl value with model value if it exists
+      if (modelValue !== undefined && modelValue !== null) {
+        this.formControl.setValue(modelValue, { emitEvent: false });
+      }
+      
+      // Create enhanced props with necessary fixes for production
+      const enhancedProps = {
+        ...fieldConfig.props,
+      };
+      
+      // For select fields, add compareWith function to ensure proper value matching in production builds
+      if (fieldConfig.type === 'select' && !enhancedProps['compareWith']) {
+        enhancedProps['compareWith'] = (o1: any, o2: any) => o1 === o2;
+      }
+      
       this.defaultFieldConfig = {
-        ...fieldConfig,
+        type: fieldConfig.type,
         key: this.field.key || fieldConfig.key || 'defaultKey',
         formControl: this.formControl,
+        props: enhancedProps,
+        wrappers: fieldConfig.wrappers || [],
         modelOptions: fieldConfig.modelOptions || this.field.modelOptions || {},
         validators: fieldConfig.validators || this.field.validators || {},
         asyncValidators:
