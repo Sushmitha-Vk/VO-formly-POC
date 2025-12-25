@@ -24,6 +24,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { GridTypeComponent } from './grid.type';
 import { FormlyFieldFile } from './file.types';
 import { MatInputModule } from '@angular/material/input';
+import { MnlFormHelperTextInputComponent } from './helpertext-input';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,6 +39,7 @@ export const appConfig: ApplicationConfig = {
       validationMessages: [{ name: 'required', message: 'This field is required' }],
       types: [
         { name: 'tabs', component: FormlyFieldTabs },
+        { name: 'mu-helper-text', component: MnlFormHelperTextInputComponent },
         { name: 'exp-panel', component: FormlyFieldExpansionPanel },
         { name: 'table', component: FormlyFieldTable },
         { name: 'autocomplete', component: AutocompleteTypeComponent, wrappers: ['form-field'] },

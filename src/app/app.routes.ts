@@ -6,10 +6,10 @@ import { LoginComponent } from './login/login.component';
 import { InboxComponent } from './inbox/inbox.component';
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: LoginComponent
-    },
+    // {
+    //     path: '',
+    //     component: LoginComponent
+    // },
     {
         path: 'login',
         component: LoginComponent
@@ -17,15 +17,15 @@ export const routes: Routes = [
     {
         path: 'approval-form',
         component: ApproverFormComponent,
-        canActivate: [authGuard] 
+        canActivate: [] 
     },
     {
         path: 'inbox',
         component: InboxComponent,
-        canActivate: [authGuard] 
+        canActivate: [] 
     },
     {
-        path: 'vendor-onboarding',
+        path: '',
         component: VendorOnboardingComponent
     }
 ];

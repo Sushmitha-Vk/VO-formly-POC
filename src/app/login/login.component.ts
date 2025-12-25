@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
-    localStorage.removeItem('loggedInUser');
+    // localStorage.removeItem('loggedInUser');
     this.buildForm();
     this.passwordType = "password";
   }

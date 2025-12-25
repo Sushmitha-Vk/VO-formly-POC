@@ -37,690 +37,276 @@ import {parse, stringify } from 'flatted';
 export class VendorOnboardingComponent implements OnInit {
   @Input() vendorId: any;
   form = new FormGroup({});
-  model: any = {
-    profitLossStatement: [
-      {
-        year: 2024,
-        revenue: 750000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 90000,
-        ebitda: 460000,
-        depreciation: 30000,
-        operatingIncome: 430000,
-        interestExpense: 25000,
-        taxExpenses: 70000,
-        netIncome: 335000,
-      },
-      {
-        year: 2024,
-        revenue: 600000,
-        costOfGoodsSold: 180000,
-        sellingGeneralAdministrativeCost: 85000,
-        ebitda: 335000,
-        depreciation: 20000,
-        operatingIncome: 315000,
-        interestExpense: 15000,
-        taxExpenses: 50000,
-        netIncome: 265000,
-      },
-      {
-        year: 2024,
-        revenue: 800000,
-        costOfGoodsSold: 220000,
-        sellingGeneralAdministrativeCost: 95000,
-        ebitda: 485000,
-        depreciation: 25000,
-        operatingIncome: 460000,
-        interestExpense: 30000,
-        taxExpenses: 80000,
-        netIncome: 350000,
-      },
-      {
-        year: 2024,
-        revenue: 550000,
-        costOfGoodsSold: 170000,
-        sellingGeneralAdministrativeCost: 75000,
-        ebitda: 335000,
-        depreciation: 15000,
-        operatingIncome: 320000,
-        interestExpense: 20000,
-        taxExpenses: 60000,
-        netIncome: 260000,
-      },
-      {
-        year: 2024,
-        revenue: 700000,
-        costOfGoodsSold: 190000,
-        sellingGeneralAdministrativeCost: 88000,
-        ebitda: 422000,
-        depreciation: 22000,
-        operatingIncome: 400000,
-        interestExpense: 18000,
-        taxExpenses: 65000,
-        netIncome: 317000,
-      },
-      {
-        year: 2024,
-        revenue: 650000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 80000,
-        ebitda: 370000,
-        depreciation: 25000,
-        operatingIncome: 345000,
-        interestExpense: 20000,
-        taxExpenses: 60000,
-        netIncome: 265000,
-      },
-      {
-        year: 2024,
-        revenue: 720000,
-        costOfGoodsSold: 210000,
-        sellingGeneralAdministrativeCost: 95000,
-        ebitda: 415000,
-        depreciation: 27000,
-        operatingIncome: 388000,
-        interestExpense: 22000,
-        taxExpenses: 70000,
-        netIncome: 316000,
-      },
-      {
-        year: 2024,
-        revenue: 800000,
-        costOfGoodsSold: 230000,
-        sellingGeneralAdministrativeCost: 90000,
-        ebitda: 480000,
-        depreciation: 30000,
-        operatingIncome: 450000,
-        interestExpense: 25000,
-        taxExpenses: 80000,
-        netIncome: 345000,
-      },
-      {
-        year: 2024,
-        revenue: 670000,
-        costOfGoodsSold: 190000,
-        sellingGeneralAdministrativeCost: 85000,
-        ebitda: 395000,
-        depreciation: 20000,
-        operatingIncome: 375000,
-        interestExpense: 18000,
-        taxExpenses: 65000,
-        netIncome: 310000,
-      },
-      {
-        year: 2024,
-        revenue: 740000,
-        costOfGoodsSold: 220000,
-        sellingGeneralAdministrativeCost: 88000,
-        ebitda: 432000,
-        depreciation: 24000,
-        operatingIncome: 408000,
-        interestExpense: 21000,
-        taxExpenses: 70000,
-        netIncome: 317000,
-      },
-      {
-        year: 2024,
-        revenue: 620000,
-        costOfGoodsSold: 200000,
-        sellingGeneralAdministrativeCost: 80000,
-        ebitda: 340000,
-        depreciation: 18000,
-        operatingIncome: 322000,
-        interestExpense: 16000,
-        taxExpenses: 58000,
-        netIncome: 266000,
-      },
-    ],
-  };
+  model: any = {}
+//   {
+//   exact_match_correct: "Yes",
+//   exact_match_incorrect: "No",
+//   range_within_correct: 150,
+//   range_outside_incorrect: 2,
+//   attempted_criteria: "Basic security measures",
+//   no_helper_disabled: "technology"
+// };
   options: FormlyFormOptions = {};
   previousData: any[] = [];
   translate = inject(TranslateService);
-  fields!: FormlyFieldConfig[] 
-  // =
-  //  [
-  //   {
-  //     type: 'tabs',
-  //     fieldGroup: [
-  //       {
-  //         key: 'exampleinput',
-  //         type: 'input',
-  //         props: {
-  //           label: 'Enter input',
-  //           required: false,
-  //         },
-  //         // expressions: {
-  //         //   hide: (field: FormlyFieldConfig) => {
-  //         //     console.log('--y--', field);
-  //         //     return false;
-  //         //   },
-
-  //         // },
-  //       },
-  //       {
-  //         type: 'stepper',
-  //         props: {
-  //           label: 'Form',
-  //         },
-  //         fieldGroup: [
-  //           {
-  //             props: { label: 'Personal data' },              
-  //             fieldGroup: [
-  //               {
-  //                 key: 'personalDataStep',
-  //                 fieldGroup: [
-  //                   {
-  //                     key: 'panNo',
-  //                     type: 'input',
-  //                     props: {
-  //                       // label: 'Enter PAN No',
-  //                       required: true,
-  //                     },
-  //                     expressions: {
-  //                       'props.label': this.translate.stream('FORM.PANNUMBER'),
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'accountNumber',
-  //                     type: 'input',
-  //                     props: {
-  //                       type: 'number',
-  //                       // label: 'Account Number',
-  //                       required: true,
-  //                     },
-  //                     expressions: {
-  //                       'props.label': this.translate.stream('FORM.ACCNUMBER'),
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'remarks',
-  //                     type: 'textarea',
-  //                     props: {
-  //                       // label: 'Remaks,if any',
-  //                       placeholder: 'Please enter your message here',
-  //                       description: 'Please enter your message',
-  //                       required: false,
-  //                     },
-  //                     expressions: {
-  //                       'props.label': this.translate.stream('FORM.REMARKS'),
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'acceptTerms',
-  //                     type: 'checkbox',
-  //                     props: {
-  //                       // label: 'Accept terms',
-  //                       description: 'In order to proceed, please accept terms',
-  //                       pattern: 'true',
-  //                       required: true,
-  //                     },
-  //                     expressions: {
-  //                       'props.label': this.translate.stream('FORM.TERMS'),
-  //                     },
-  //                     validation: {
-  //                       messages: {
-  //                         pattern: 'Please accept the terms',
-  //                       },
-  //                     },
-  //                   },
-  //                 ]
-  //               },
-  //             ],
-  //           },
-  //           {
-  //             props: { label: 'ESG/EH' },
-  //             fieldGroup: [
-  //               {
-  //                 key: 'esgStep',
-  //                 fieldGroup: [
-  //                   {
-  //                     key: 'countryOfHeadQuarter',
-  //                     type: 'select',
-  //                     props: {
-  //                       label: 'Country of Headquarter',
-  //                       required: true,
-  //                       options: [
-  //                         { value: 'India', label: 'India' },
-  //                         { value: 'China', label: 'China' },
-  //                         { value: 'Japan', label: 'Japan' },
-  //                         { value: 'France', label: 'France' },
-  //                         { value: 'Germany', label: 'Germany' },
-  //                         { value: 'Italy', label: 'Italy' },
-  //                       ],
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'noOfEmployees',
-  //                     type: 'number',
-  //                     props: {
-  //                       label: 'Number of Employees',
-  //                       required: false,
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'revenue',
-  //                     type: 'input',
-  //                     props: {
-  //                       label: 'Revenue of company',
-  //                       required: false,
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'doesYourCompUseRenewableElectricity',
-  //                     type: 'radio',
-  //                     props: {
-  //                       label: 'Does your company use renewable electricity?',
-  //                       required: false,
-  //                       options: [
-  //                         { value: 'Yes', label: 'Yes' },
-  //                         { value: 'No', label: 'No' },
-  //                       ],
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'ghgEmissionInventoryAssurance',
-  //                     type: 'radio',
-  //                     props: {
-  //                       label:
-  //                         'Has your company has done GHG Emission inventory assurance by 3rd party?',
-  //                       required: false,
-  //                       options: [
-  //                         { value: 'Yes', label: 'Yes' },
-  //                         { value: 'No', label: 'No' },
-  //                       ],
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'doesYourCompanyCalculateTheGhgEmissions',
-  //                     type: 'radio',
-  //                     props: {
-  //                       label: 'Does your company calculate the GHG Emissions?',
-  //                       required: false,
-  //                       options: [
-  //                         { value: 'Yes', label: 'Yes' },
-  //                         { value: 'No', label: 'No' },
-  //                       ],
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'scope1Emissions',
-  //                     type: 'input',
-  //                     props: {
-  //                       label: 'Scope 1 emissions',
-  //                       placeholder: 'Provide GHG Emission data tCO2e',
-  //                       required: false,
-  //                     },
-  //                     expressions: {
-  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'scope2Emissions',
-  //                     type: 'input',
-  //                     props: {
-  //                       label: 'Scope 2 emissions',
-  //                       placeholder: 'Provide GHG Emission data tCO2e',
-  //                       required: false,
-  //                     },
-  //                     expressions: {
-  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'scope3Emissions',
-  //                     type: 'input',
-  //                     props: {
-  //                       label: 'Scope 3 emissions',
-  //                       placeholder: 'Provide GHG Emission data tCO2e',
-  //                       required: false,
-  //                     },
-  //                     expressions: {
-  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'Yes'",
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'reasonForNotCalculationgGhgEmissions',
-  //                     type: 'input',
-  //                     props: {
-  //                       label:
-  //                         'Please provide reasons for not calculating the GHG emissions',
-  //                       required: false,
-  //                     },
-  //                     expressions: {
-  //                       hide: "model?.doesYourCompanyCalculateTheGhgEmissions !== 'No'",
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'yourGhgEmissionsDataArePublished',
-  //                     type: 'radio',
-  //                     props: {
-  //                       label: 'Your GHG emissions data are published?',
-  //                       required: false,
-  //                       options: [
-  //                         { value: 'Yes', label: 'Yes' },
-  //                         { value: 'No', label: 'No' },
-  //                       ],
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'listOfKeyBankers',
-  //                     type: 'multi-select-autocomplete',
-  //                     props: {
-  //                       required: true,
-  //                       label: 'Please provide a list of your key bankers',
-  //                       options: [
-  //                         'State Bank Of India',
-  //                         'Canara Bank',
-  //                         'City Bank',
-  //                         'HDFC Bank',
-  //                         'ICICI Bank',
-  //                         'Axis Bank',
-  //                         'Central Bank',
-  //                       ],
-  //                     },
-  //                   },
-  //                 ]
-  //               },
-  //             ],
-  //           },
-  //           {
-  //             props: { label: 'Account Details' },
-  //             fieldGroup: [
-  //               {
-  //                 key: 'accountDetailsStep',
-  //                 fieldGroup: [
-  //                   {
-  //                     type: 'exp-panel',
-  //                     props: { label: 'Address' },
-  //                     fieldGroup: [
-  //                       {
-  //                         fieldGroup: [
-  //                           {
-  //                             key: 'country',
-  //                             type: 'input',
-  //                             props: {
-  //                               label: 'Country',
-  //                               required: false,
-  //                             },
-  //                           },
-  //                           {
-  //                             key: 'state',
-  //                             type: 'input',
-  //                             props: {
-  //                               label: 'State',
-  //                               required: false,
-  //                             },
-  //                           },
-  //                           {
-  //                             key: 'pin',
-  //                             type: 'number',
-  //                             props: {
-  //                               label: 'Pin code',
-  //                               required: false,
-  //                             },
-  //                           },
-  //                         ],
-  //                       },
-  //                     ],
-  //                   },
-  //                   {
-  //                     key: 'bankDetails',
-  //                     type: 'table',
-  //                     props: {
-  //                       height: '200px',
-  //                       gridOptions: {
-  //                         rowHeight: 42,
-  //                         columnDefs: [
-  //                           'name',
-  //                           'accountType',
-  //                           'accountNumber',
-  //                           'ifscCode',
-  //                           // {
-  //                           //   headerName: 'Name',
-  //                           //   field: 'name',
-  //                           //   sortable: true,
-  //                           //   width: 350,
-  //                           // }
-  //                         ],
-  //                         data: [
-  //                           {
-  //                             name: 'John',
-  //                             accountType: 'Current',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Abram',
-  //                             accountType: 'Current',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Cist',
-  //                             accountType: 'Savings',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Alphy',
-  //                             accountType: 'Current',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Zench',
-  //                             accountType: 'Current',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Linchy',
-  //                             accountType: 'Savings',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                           {
-  //                             name: 'Morgy',
-  //                             accountType: 'Current',
-  //                             accountNumber: '64432677',
-  //                             ifscCode: 'hcb43',
-  //                           },
-  //                         ],
-  //                       },
-  //                     },
-  //                   },
-  //                 ]
-  //               },
-  //             ],
-  //           },
-  //           {
-  //             props: { label: 'Comment' },
-  //             // expressions: {
-  //             //   hide: "field.model.id == 22"
-  //             // },
-  //             fieldGroup: [
-  //               {
-  //                 key: 'commentStep',
-  //                 fieldGroup: [
-  //                   {
-  //                     key: 'comment',
-  //                     type: 'textarea',
-  //                     props: {
-  //                       label: 'Comments',
-  //                       placeholder: 'Please enter your comments here',
-  //                       description: 'Please enter your comments',
-  //                       required: false,
-  //                     },
-  //                   },
-  //                   {
-  //                     key: 'file',
-  //                     type: 'file',
-  //                   },
-  //                 ]
-  //               },
-  //             ],
-  //           },
-  //           {
-  //             props: { label: 'Profit & Loss Statement' },
-  //             fieldGroup: [
-  //               {
-  //                 key: 'profitLossStep',
-  //                 fieldGroup: [
-  //                   {
-  //                     key: 'profitLossStatement',
-  //                     type: 'grid',
-  //                     className: 'ag-theme-balham',
-  //                     props: {
-  //                       height: '300px',
-  //                       gridOptions: {
-  //                         rowHeight: 42,
-  //                         columnDefs: [
-  //                           {
-  //                             headerName: 'Year',
-  //                             field: 'year',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Revenue',
-  //                             field: 'revenue',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Cost of goods sold (COGS)',
-  //                             field: 'costOfGoodsSold',
-  //                             width: 330,
-  //                           },
-  //                           {
-  //                             headerName: 'Selling, General & administrative cost',
-  //                             field: 'sellingGeneralAdministrativeCost',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'EBITDA',
-  //                             field: 'ebitda',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Depreciation and Amortization',
-  //                             field: 'depreciation',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Operating income (EBIT)',
-  //                             field: 'operatingIncome',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Interest expense',
-  //                             field: 'interestExpense',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Tax expenses',
-  //                             field: 'taxExpenses',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                           {
-  //                             headerName: 'Net income / PAT',
-  //                             field: 'netIncome',
-  //                             sortable: true,
-  //                             width: 350,
-  //                           },
-  //                         ],
-  //                       },
-  //                     },
-  //                     fieldArray: {
-  //                       fieldGroup: [
-  //                         {
-  //                           type: 'input',
-  //                           key: 'year',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'revenue',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'costOfGoodsSold',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'sellingGeneralAdministrativeCost',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'ebitda',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'depreciation',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'operatingIncome',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'interestExpense',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'taxExpenses',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                         {
-  //                           type: 'input',
-  //                           key: 'netIncome',
-  //                           props: {
-  //                             required: true,
-  //                           },
-  //                         },
-  //                       ],
-  //                     },
-  //                   },
-  //                 ]
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
+  fields: FormlyFieldConfig[] = [
+  {
+    "key": "question15",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "If you selected “Others” in the previous question, please specify the management system(s).",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": ""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": false,
+      "readonly": false,
+      "scoring": {
+        "criteria": "attempted"
+      },
+      "defaultFieldConfig": {
+        "type": "input",
+        "props": {
+          "label": "If you selected “Others” in the previous question, please specify the management system(s).",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "type": "select",
+    "key": "selectTest",
+    "props": {
+      "label": "Select Test",
+      "placeholder": "",
+      "appearance": "outline",
+      "readonly": false,
+      "required": true,
+      "options": [
+        {
+          "label": "Yes Working",
+          "value": "Yes Working"
+        },
+        {
+          "label": "No",
+          "value": "No"
+        }
+      ]
+    }
+  },
+  {
+    "key": "question8",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you undertake risk assessment to identify potential impacts/opportunities across your value chain?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Risk assessments help proactively identify environmental, social, and operational risks and opportunities, ensuring resilience and responsible decision-making.\nCorrective Action: Establish a structured risk assessment process covering key areas such as supply chain, compliance, sustainability, and stakeholder impact.\nPreventive Action: Integrate risk management into strategic planning, conduct periodic reviews, and engage cross-functional teams to ensure continuous improvement."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you undertake risk assessment to identify potential impacts/opportunities across your value chain?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question9",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you have any ongoing litigation or regulatory notices with respect to compliance?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Timely disclosure and resolution of litigation or regulatory notices are critical to maintaining trust, legal compliance, and business continuity.\nCorrective Action: Document all ongoing cases, assess root causes, and implement immediate remedial actions in consultation with legal and compliance teams.\nPreventive Action: Establish a compliance monitoring framework and conduct periodic legal risk assessments to proactively identify and mitigate future issues."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["No"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you have any ongoing litigation or regulatory notices with respect to compliance?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question10",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Is there any legal proceedings associated with fraud, anti-corruption, bribery, unfair labor practices, human rights abuses or other malpractices?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Addressing such legal issues is vital to uphold ethical standards, protect stakeholder trust, and ensure regulatory compliance.\nCorrective Action:  Document and disclose case details, cooperate with investigations, and implement immediate corrective measures including leadership accountability and policy enforcement.\nPreventive Action: Strengthen internal controls, conduct regular ethics and compliance training, and establish whistleblower mechanisms to prevent recurrence."
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["No"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Is there any legal proceedings associated with fraud, anti-corruption, bribery, unfair labor practices, human rights abuses or other malpractices?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question11",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Does your company have any sustainability certifications (Ecovadis/SEDEX/FSC/RSPO)?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: Sustainability certifications validate responsible practices and enhance credibility with stakeholders, regulators, and customers.\nCorrective Action: Supplier to initiate the process of obtaining relevant certifications if required and relevant (e.g., Ecovadis, SEDEX, FSC, RSPO) aligned with their operations and industry standards.\nPreventive Action: Develop a sustainability roadmap with periodic reviews to ensure continuous improvement and readiness for future certification requirements.\""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Does your company have any sustainability certifications (Ecovadis/SEDEX/FSC/RSPO)?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  },
+  {
+    "key": "question12",
+    "type": "mu-helper-text",
+    "props": {
+      "label": "Do you have an Information Security Policy?",
+      "helperProps": {
+        "helperLabel": "Enable CAPA",
+        "defaultHelperText": "Importance: An Information Security Policy is essential to safeguard sensitive data, ensure regulatory compliance, and protect against cyber threats.\nCorrective Action: Supplier to develop and implement a formal Information Security Policy covering data protection, access control, and incident response.\nPreventive Action: Conduct regular security audits, employee training, and policy reviews to maintain robust information security practices.\""
+      },
+      "value": "",
+      "required": true,
+      "enableHelper": false,
+      "hasScoreImpact": true,
+      "readonly": false,
+      "scoring": {
+        "criteria": "exactMatch",
+        "answer": ["Yes"]
+      },
+      "defaultFieldConfig": {
+        "type": "select",
+        "props": {
+          "label": "Do you have an Information Security Policy?",
+          "placeholder": "",
+          "appearance": "outline",
+          "readonly": false,
+          "required": true,
+          "options": [
+            {
+              "label": "Yes",
+              "value": "Yes"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        "wrappers": ["form-field"]
+      }
+    }
+  }
+];
 
   schemaDefinition = {
     type: 'object',
@@ -758,22 +344,22 @@ export class VendorOnboardingComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.apiService.getFormById('66c7174609d62049315b4cb1').subscribe((form)=>{
-      this.fields = parse(form.formFieldConfigs)
-      if (this.vendorId) {
-        this.getDataById(this.vendorId);
-      }
-    })
-    this.getAllData();
+    this.model = JSON.parse(localStorage.getItem('ModelData') || '{}');
+    console.log(this.model);
+    // this.form.disable({emitEvent: false});
+    // If you have a specific form ID to fetch, you can uncomment and use the following line
+    // this.apiService.getFormById('66c7174609d62049315b4cb1').subscribe((form)=>{
+    //   this.fields = parse(form.formFieldConfigs)
+    //   if (this.vendorId) {
+    //     this.getDataById(this.vendorId);
+    //   }
+    // })
+    // this.getAllData();
   }
 
   submit() {
-    const data = {
-      file: '',
-      formData: this.model,
-      status: 'Submitted',
-    };
-    this.apiService.addData(data).subscribe();
+   localStorage.setItem('ModelData', JSON.stringify(this.model));
+
   }
 
   getAllData() {

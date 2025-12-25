@@ -1,7 +1,8 @@
 <mat-toolbar *ngIf="!vendorId" color="primary">Vendor Onboarding Form</mat-toolbar>
-<form [formGroup]="form" (ngSubmit)="submit()">
+<form [formGroup]="form" >
     <formly-form [model]="model" [fields]="fields" [options]="options" [form]="form"></formly-form>
 </form>
 <!-- <button (click)="createNewForm()">Create FORM Fields Config</button>
 <button (click)="createNewSchema()">Create FORM Schema</button> -->
+<button (click)="submit()" mat-raised-button color="primary">Submit</button>
 
